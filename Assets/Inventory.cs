@@ -29,3 +29,13 @@ public class Inventory : MonoBehaviour {
         myInventory.Add(commonItems[r]);
     }
 }
+
+
+
+
+
+
+
+
+
+
