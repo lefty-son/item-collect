@@ -8,10 +8,6 @@ public class Item : ScriptableObject {
 
     #region CONFIG
 
-    private readonly int COMMON_CHANCE = 67;
-    private readonly int RARE_CHANCE = 88;
-    private readonly int LEGENDARY_CHANCE = 97;
-
     private readonly int COMMON_COST_MULTIPLIER = 1;
     private readonly int RARE_COST_MULTIPLIER = 3;
     private readonly int LEGENDARY_COST_MULTIPLIER = 12;
@@ -22,11 +18,11 @@ public class Item : ScriptableObject {
     #region PROP
 
     public string id;
-    public string EN_Name;
-	public string KR_Name;
-    public string JP_Name;
-    public string Simple_CN_Name;
-    public string Traditional_CN_Name;
+    public string enName, enDesc;
+    public string krName, krDesc;
+    public string cnName, cnDesc;
+    public string jpName, jpDesc;
+    public string cntName, cntDesc;
     public int defaultCost;
     public int sellingCost;
     public enum Rarity { COMMON, RARE, LEGENDARY, ANCIENT }
@@ -34,23 +30,6 @@ public class Item : ScriptableObject {
     public Sprite sprite;
 
     #endregion
-
-    //public void Roll(){
-    //    sellingCost = defaultCost;
-    //    var r = Random.Range(0, 100);
-    //    if(r <= COMMON_CHANCE){
-    //        SetCommon();
-    //    }
-    //    else if(r <= RARE_CHANCE){
-    //        SetRare();
-    //    }
-    //    else if(r <= LEGENDARY_CHANCE){
-    //        SetLegendray();
-    //    }
-    //    else {
-    //        SetAncient();
-    //    }
-    //}
 
     public void SetCommon(){
         rarity = Rarity.COMMON;
@@ -72,4 +51,83 @@ public class Item : ScriptableObject {
         sellingCost = defaultCost * ANCIENT_COST_MULTIPLIER;
     }
 
+    public void SetTextEN(string _name, string _desc){
+        enName = _name;
+        enDesc = _desc;
+    }
+
+    public void SetTextKR(string _name, string _desc)
+    {
+        krName = _name;
+        krDesc = _desc;
+    }
+
+    public void SetTextCN(string _name, string _desc)
+    {
+        cnName = _name;
+        cnDesc = _desc;
+    }
+
+    public void SetTextJP(string _name, string _desc)
+    {
+        jpName = _name;
+        jpDesc = _desc;
+    }
+
+    public void SetTextCNT(string _name, string _desc)
+    {
+        cntName = _name;
+        cntDesc = _desc;
+    }
+
+    public string GetNameNative(){
+        if (Application.systemLanguage == SystemLanguage.English) {
+            return enName;
+        }
+        else if(Application.systemLanguage == SystemLanguage.Korean){
+            return krName;
+        }
+        else if (Application.systemLanguage == SystemLanguage.ChineseSimplified)
+        {
+            return cnName;
+        }
+        else if (Application.systemLanguage == SystemLanguage.Japanese)
+        {
+            return jpName;
+        }
+        else if (Application.systemLanguage == SystemLanguage.ChineseTraditional)
+        {
+            return cntName;
+        }
+        else {
+            return enName;
+        }
+    }
+
+    public string GetDescNative(){
+        if (Application.systemLanguage == SystemLanguage.English)
+        {
+            return enDesc;
+        }
+        else if (Application.systemLanguage == SystemLanguage.Korean)
+        {
+            return krDesc;
+        }
+        else if (Application.systemLanguage == SystemLanguage.ChineseSimplified)
+        {
+            return cnDesc;
+        }
+        else if (Application.systemLanguage == SystemLanguage.Japanese)
+        {
+            return jpDesc;
+        }
+        else if (Application.systemLanguage == SystemLanguage.ChineseTraditional)
+        {
+            return cntDesc;
+        }
+        else
+        {
+            return enDesc;
+        }
+    }
 }
