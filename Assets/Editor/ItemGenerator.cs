@@ -5,7 +5,7 @@ using System.Text;
 using System.IO;
 using UnityEditor;
 
-public class ItemGenerator :MonoBehaviour
+public class ItemGenerator
 {
     public Texture2D spriteSheet1, spriteSheet2, spriteSheet3, spriteSheet4, spriteSheet5;
 
@@ -16,8 +16,6 @@ public class ItemGenerator :MonoBehaviour
     public Item[] itemsCommon3, itemsRare3, itemsLegendary3, itemsAncient3;
     public Item[] itemsCommon4, itemsRare4, itemsLegendary4, itemsAncient4;
     public Item[] itemsCommon5, itemsRare5, itemsLegendary5, itemsAncient5;
-
-
 
     private void Generate(Sprite[] sprites, string nameHolder){
         if(sprites == sprites4){
