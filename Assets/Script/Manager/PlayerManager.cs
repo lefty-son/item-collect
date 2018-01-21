@@ -25,7 +25,7 @@ public class PlayerManager : MonoBehaviour {
         else {
             // New user
             PlayerPrefs.SetInt(COOKIE, 1);
-            PlayerPrefs.SetFloat(TRADE, 1.0f);
+            PlayerPrefs.SetFloat(TRADE, 1.5f);
             PlayerPrefs.SetInt(BAG_SIZE, DEFAULT_BAG_SIZE);
         }
     }

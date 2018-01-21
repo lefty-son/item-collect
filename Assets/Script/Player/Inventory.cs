@@ -22,6 +22,15 @@ public class Inventory : MonoBehaviour {
         Debug.Log(item.rarity);
     }
 
+    public void SellAllItems(){
+        var revenue = 0;
+        foreach(var item in inventory){
+            revenue += item.sellingCost;
+        }
+        inventory.Clear();
+        Debug.Log(revenue * PlayerManager.instance.GetStatsTrade());
+    }
+
 }
 
 
