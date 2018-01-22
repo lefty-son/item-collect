@@ -52,6 +52,7 @@ public class Farm : MonoBehaviour
     }
 
     public void Init(){
+        ResetSlider();
         farmable = true;
     }
 
