@@ -8,7 +8,7 @@ public class UIManager : MonoBehaviour {
 
     public Button b_Inventory, b_Growth, b_Travel, b_Reward, b_Settings;
     public GameObject p_Inventory, p_Growth, p_Travel, p_Reward, p_Settings;
-    public GameObject p_Farm;
+    public GameObject p_Farm, p_Discover, p_DiscoverHelper;
 
     private void Awake()
     {
@@ -83,4 +83,21 @@ public class UIManager : MonoBehaviour {
         p_Reward.SetActive(false);
     }
 
+    public void OnFarm(){
+        p_Farm.SetActive(true);
+    }
+
+    public void OffFarm(){
+        p_Farm.SetActive(false);
+    }
+
+    public void OnDiscover(){
+        p_Discover.SetActive(true);
+        p_DiscoverHelper.SetActive(true);
+    }
+
+    public void OffDiscover(){
+        p_Discover.SetActive(false);
+        p_DiscoverHelper.SetActive(false);
+    }
 }

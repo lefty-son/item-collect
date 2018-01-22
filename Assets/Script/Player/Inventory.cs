@@ -31,6 +31,10 @@ public class Inventory : MonoBehaviour {
         Debug.Log(revenue * PlayerManager.instance.GetStatsTrade());
     }
 
+    public Item GetLastItem(){
+        return inventory[inventory.Count - 1];
+    }
+
 }
 
 
