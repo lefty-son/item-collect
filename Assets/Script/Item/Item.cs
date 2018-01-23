@@ -78,54 +78,88 @@ public class Item : ScriptableObject {
         cntDesc = _desc;
     }
 
+    public int GetSellingCost(){
+        return sellingCost;
+    }
+
     public string GetNameNative(){
-        if (Application.systemLanguage == SystemLanguage.English) {
+        if (PlayerManager.instance.LANGUAGE == PlayerManager.DEVICE_LANGUAGE.EN)
+        {
             return enName;
         }
-        else if(Application.systemLanguage == SystemLanguage.Korean){
+        else if (PlayerManager.instance.LANGUAGE == PlayerManager.DEVICE_LANGUAGE.KR)
+        {
             return krName;
         }
-        else if (Application.systemLanguage == SystemLanguage.ChineseSimplified)
-        {
-            return cnName;
-        }
-        else if (Application.systemLanguage == SystemLanguage.Japanese)
+        else if (PlayerManager.instance.LANGUAGE == PlayerManager.DEVICE_LANGUAGE.JP)
         {
             return jpName;
         }
-        else if (Application.systemLanguage == SystemLanguage.ChineseTraditional)
+        else if (PlayerManager.instance.LANGUAGE == PlayerManager.DEVICE_LANGUAGE.CN)
+        {
+            return cnName;
+        }
+        else if (PlayerManager.instance.LANGUAGE == PlayerManager.DEVICE_LANGUAGE.CNT)
         {
             return cntName;
         }
-        else {
+        else
+        {
             return enName;
         }
     }
 
     public string GetDescNative(){
-        if (Application.systemLanguage == SystemLanguage.English)
+        if (PlayerManager.instance.LANGUAGE == PlayerManager.DEVICE_LANGUAGE.EN)
         {
             return enDesc;
         }
-        else if (Application.systemLanguage == SystemLanguage.Korean)
+        else if (PlayerManager.instance.LANGUAGE == PlayerManager.DEVICE_LANGUAGE.KR)
         {
             return krDesc;
         }
-        else if (Application.systemLanguage == SystemLanguage.ChineseSimplified)
+		else if (PlayerManager.instance.LANGUAGE == PlayerManager.DEVICE_LANGUAGE.JP)
+		{
+			return jpDesc;
+		}
+        else if (PlayerManager.instance.LANGUAGE == PlayerManager.DEVICE_LANGUAGE.CN)
         {
             return cnDesc;
         }
-        else if (Application.systemLanguage == SystemLanguage.Japanese)
-        {
-            return jpDesc;
-        }
-        else if (Application.systemLanguage == SystemLanguage.ChineseTraditional)
+        else if (PlayerManager.instance.LANGUAGE == PlayerManager.DEVICE_LANGUAGE.CNT)
         {
             return cntDesc;
         }
         else
         {
             return enDesc;
+        }
+    }
+
+    public string GetRarityNative(){
+        if (PlayerManager.instance.LANGUAGE == PlayerManager.DEVICE_LANGUAGE.EN)
+        {
+            return Localizer.GetENRarity(this);
+        }
+        else if (PlayerManager.instance.LANGUAGE == PlayerManager.DEVICE_LANGUAGE.KR)
+        {
+            return Localizer.GetKRRarity(this);
+        }
+        else if (PlayerManager.instance.LANGUAGE == PlayerManager.DEVICE_LANGUAGE.JP)
+        {
+            return Localizer.GetJPRarity(this);
+        }
+        else if (PlayerManager.instance.LANGUAGE == PlayerManager.DEVICE_LANGUAGE.CN)
+        {
+            return Localizer.GetCNRarity(this);
+        }
+        else if (PlayerManager.instance.LANGUAGE == PlayerManager.DEVICE_LANGUAGE.CNT)
+        {
+            return Localizer.GetCNTRarity(this);
+        }
+        else
+        {
+            return Localizer.GetENRarity(this);
         }
     }
 }

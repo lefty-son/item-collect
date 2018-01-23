@@ -12,10 +12,44 @@ public class PlayerManager : MonoBehaviour {
     private readonly string TRADE = "3a5373f7c1598b9e251273833f5bca21";
     private readonly string BAG_SIZE = "32510ca559c0ecdffe8438199b20c85a";
 
+    public enum DEVICE_LANGUAGE {
+        EN, KR, JP, CN, CNT
+    }
+
+    public DEVICE_LANGUAGE LANGUAGE;
+
     private void Awake()
     {
         if (instance == null) instance = this;
+        CheckLanguage();
         CheckCookie();
+    }
+
+    private void CheckLanguage(){
+        if (Application.systemLanguage == SystemLanguage.English)
+        {
+            LANGUAGE = DEVICE_LANGUAGE.EN;
+        }
+        else if (Application.systemLanguage == SystemLanguage.Korean)
+        {
+            LANGUAGE = DEVICE_LANGUAGE.KR;
+        }
+		else if (Application.systemLanguage == SystemLanguage.Japanese)
+		{
+			LANGUAGE = DEVICE_LANGUAGE.JP;
+		}
+        else if (Application.systemLanguage == SystemLanguage.ChineseSimplified)
+        {
+            LANGUAGE = DEVICE_LANGUAGE.CN;
+        }
+        else if (Application.systemLanguage == SystemLanguage.ChineseTraditional)
+        {
+            LANGUAGE = DEVICE_LANGUAGE.CNT;
+        }
+        else
+        {
+            LANGUAGE = DEVICE_LANGUAGE.EN;
+        }
     }
 
     private void CheckCookie(){
