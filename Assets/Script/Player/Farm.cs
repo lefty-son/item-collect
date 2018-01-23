@@ -78,7 +78,6 @@ public class Farm : MonoBehaviour
 
     public void Roll()
     {
-        Debug.Log("We roll.");
         var r = Random.Range(0, 100);
         if (r <= COMMON_CHANCE)
         {
