@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour {
 
     private void Init(){
         IsPlaying = true;
-        Farm.instance.Init();
+        //Farm.instance.Init();
     }
 
     private void Start()

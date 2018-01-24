@@ -108,14 +108,9 @@ public class UIManager : MonoBehaviour
 
     public void OnFarm()
     {
-        //if(Inventory.instance.IsFull()){
-        //    p_AlertFullInventory.SetActive(true);
-        //}
-        //else {
-			p_Farm.SetActive(true);
-			a_Farm.Play();
-			Farm.instance.Init();
-        //}
+		p_Farm.SetActive(true);
+		a_Farm.Play();
+		Farm.instance.Init();
     }
 
     public void OffFarm()

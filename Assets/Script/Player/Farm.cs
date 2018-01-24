@@ -12,7 +12,7 @@ public class Farm : MonoBehaviour
     [SerializeField]
     private bool farmable;
 
-    public Item tempItem;
+    public List<Item> tempItem;
 
     private readonly int COMMON_CHANCE = 68;
     private readonly int RARE_CHANCE = 87;
@@ -27,6 +27,7 @@ public class Farm : MonoBehaviour
     private void Awake()
     {
         if (instance == null) instance = this;
+        tempItem = new List<Item>();
         GetItemResources();
     }
 
@@ -62,7 +63,7 @@ public class Farm : MonoBehaviour
         farmable = true;
     }
 
-    public Item GetTempItem(){
+    public List<Item> GetTempItem(){
         return tempItem;
     }
 
@@ -80,6 +81,7 @@ public class Farm : MonoBehaviour
     }
 
     private void ResetSlider(){
+        tempItem.Clear();
         farmSlider.value = 0;
         farmable = false;
     }
@@ -88,22 +90,50 @@ public class Farm : MonoBehaviour
 
     public void Roll()
     {
-        var r = Random.Range(0, 100);
-        if (r <= COMMON_CHANCE)
-        {
-            tempItem = PickCommon();
+       
+        var luck = Random.Range(1, 101);
+
+        // Basic roll
+        for (int i = 0; i < 3; i++){
+            var r = Random.Range(0, 100);
+            if (r <= COMMON_CHANCE)
+            {
+                tempItem.Add(PickCommon());
+            }
+            else if (r <= RARE_CHANCE)
+            {
+                tempItem.Add(PickRare());
+            }
+            else if (r <= LEGENDARY_CHANCE)
+            {
+                tempItem.Add(PickLegendary());
+            }
+            else
+            {
+                tempItem.Add(PickAncient());
+            }
         }
-        else if (r <= RARE_CHANCE)
+
+        // Luck it out
+        if (luck <= 50)
         {
-            tempItem = PickRare();
-        }
-        else if (r <= LEGENDARY_CHANCE)
-        {
-            tempItem = PickLegendary();
-        }
-        else
-        {
-            tempItem = PickAncient();
+            var r = Random.Range(0, 100);
+            if (r <= COMMON_CHANCE)
+            {
+                tempItem.Add(PickCommon());
+            }
+            else if (r <= RARE_CHANCE)
+            {
+                tempItem.Add(PickRare());
+            }
+            else if (r <= LEGENDARY_CHANCE)
+            {
+                tempItem.Add(PickLegendary());
+            }
+            else
+            {
+                tempItem.Add(PickAncient());
+            }
         }
     }
 
