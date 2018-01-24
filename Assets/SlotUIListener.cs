@@ -15,7 +15,7 @@ public class SlotUIListener : MonoBehaviour {
 
     public Button b_Forge, b_Drop;
 
-    [SerializeField ]private Item thisItem;
+    [SerializeField ]private GameItem thisItem;
 
     private void Awake()
     {
@@ -24,7 +24,7 @@ public class SlotUIListener : MonoBehaviour {
         b_Drop.onClick.AddListener(Drop);
     }
 
-    public void OnNotify(Item item){
+    public void OnNotify(GameItem item){
         thisItem = item;
 
         thisImage.enabled = true;
@@ -67,14 +67,14 @@ public class SlotUIListener : MonoBehaviour {
             i_SpriteInner.sprite = sp_AncientInner;
         }
 
-        t_ItemName.text = item.GetNameNative();
-        t_Rarity.text = item.GetRarityNative();
-        t_SellingCost.text = item.GetSellingCost().ToString();
+        t_ItemName.text = item.nameNative;
+        t_Rarity.text = item.rarityNative;
+        t_SellingCost.text = item.sellingCost.ToString();
         i_SpriteItem.sprite = item.sprite;
     }
 
     private void Forge(){
-        Debug.LogFormat("Forging {0}", thisItem.name);
+        Debug.LogFormat("Forging {0}", thisItem.nameNative);
     }
 
     private void Drop(){

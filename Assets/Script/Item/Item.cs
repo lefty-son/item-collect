@@ -15,6 +15,7 @@ public class Item : ScriptableObject {
 
     #region PROP
 
+    public string inventoryId;
     public string id;
     public string enName, enDesc;
     public string krName, krDesc;
@@ -161,5 +162,18 @@ public class Item : ScriptableObject {
         {
             return Localizer.GetENRarity(this);
         }
+    }
+
+    public Item(string id, string enName, string krName, string jpName, string cnName, string cntName, int sellingCost, Rarity rarity, Sprite sprite){
+        this.inventoryId = ItemMD5Generator.MD5Hash(id);
+        this.id = id;
+        this.enName = enName;
+		this.krName = krName;
+		this.jpName = jpName;
+        this.cnName = cnName;
+        this.cntName = cntName;
+        this.sellingCost = sellingCost;
+        this.rarity = rarity;
+        this.sprite = sprite;
     }
 }

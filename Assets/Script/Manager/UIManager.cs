@@ -16,7 +16,7 @@ public class UIManager : MonoBehaviour
     /* Farm Panel */
     public Animation a_Farm;
     public Button b_SellNow, b_Archive;
-    public GameObject p_Farm, p_Discover, p_DiscoverHelper;
+    public GameObject p_Farm, p_Discover, p_DiscoverHelper, p_AlertFullInventory;
     /* ---------- */
 
     private void Awake()
@@ -108,9 +108,14 @@ public class UIManager : MonoBehaviour
 
     public void OnFarm()
     {
-        p_Farm.SetActive(true);
-        a_Farm.Play();
-        Farm.instance.Init();
+        //if(Inventory.instance.IsFull()){
+        //    p_AlertFullInventory.SetActive(true);
+        //}
+        //else {
+			p_Farm.SetActive(true);
+			a_Farm.Play();
+			Farm.instance.Init();
+        //}
     }
 
     public void OffFarm()
@@ -142,9 +147,9 @@ public class UIManager : MonoBehaviour
     }
 
     public void OnClickArchive(){
+        Inventory.instance.AddItem(Farm.instance.GetTempItem());
         OnConfirm();
     }
-
 
     #endregion
 

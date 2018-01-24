@@ -4,8 +4,16 @@ using UnityEngine;
 
 public class InventoryUIListener : MonoBehaviour {
 
+    public static InventoryUIListener instance;
+
+
     public GameObject slotPrefab;
     public List<SlotUIListener> slots;
+
+	private void Awake()
+	{
+		if (instance == null) instance = this;
+	}
 
     private void Start()
     {

@@ -14,7 +14,7 @@ public class DiscoverUIListener : MonoBehaviour {
 
     private void OnEnable()
     {
-        var item = Inventory.instance.GetLastItem();
+        var item = Farm.instance.GetTempItem();
 
         /* Set as rarity */
         if(item.rarity == Item.Rarity.COMMON){
