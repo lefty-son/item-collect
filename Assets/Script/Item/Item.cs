@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : ScriptableObject {
+public class Item : ScriptableObject
+{
 
     #region CONFIG
 
@@ -30,27 +31,36 @@ public class Item : ScriptableObject {
 
     #endregion
 
-    public void SetCommon(){
+
+
+    #region SETTER
+
+    public void SetCommon()
+    {
         rarity = Rarity.COMMON;
         sellingCost = defaultCost * COMMON_COST_MULTIPLIER;
     }
 
-    public void SetRare(){
+    public void SetRare()
+    {
         rarity = Rarity.RARE;
         sellingCost = defaultCost * RARE_COST_MULTIPLIER;
     }
 
-    public void SetLegendray(){
+    public void SetLegendray()
+    {
         rarity = Rarity.LEGENDARY;
         sellingCost = defaultCost * LEGENDARY_COST_MULTIPLIER;
     }
 
-    public void SetAncient(){
+    public void SetAncient()
+    {
         rarity = Rarity.ANCIENT;
         sellingCost = defaultCost * ANCIENT_COST_MULTIPLIER;
     }
 
-    public void SetTextEN(string _name, string _desc){
+    public void SetTextEN(string _name, string _desc)
+    {
         enName = _name;
         enDesc = _desc;
     }
@@ -79,11 +89,18 @@ public class Item : ScriptableObject {
         cntDesc = _desc;
     }
 
-    public int GetSellingCost(){
+    #endregion
+
+
+    #region GETTER
+
+    public int GetSellingCost()
+    {
         return sellingCost;
     }
 
-    public string GetNameNative(){
+    public string GetNameNative()
+    {
         if (PlayerManager.instance.LANGUAGE == PlayerManager.DEVICE_LANGUAGE.EN)
         {
             return enName;
@@ -110,7 +127,8 @@ public class Item : ScriptableObject {
         }
     }
 
-    public string GetDescNative(){
+    public string GetDescNative()
+    {
         if (PlayerManager.instance.LANGUAGE == PlayerManager.DEVICE_LANGUAGE.EN)
         {
             return enDesc;
@@ -119,10 +137,10 @@ public class Item : ScriptableObject {
         {
             return krDesc;
         }
-		else if (PlayerManager.instance.LANGUAGE == PlayerManager.DEVICE_LANGUAGE.JP)
-		{
-			return jpDesc;
-		}
+        else if (PlayerManager.instance.LANGUAGE == PlayerManager.DEVICE_LANGUAGE.JP)
+        {
+            return jpDesc;
+        }
         else if (PlayerManager.instance.LANGUAGE == PlayerManager.DEVICE_LANGUAGE.CN)
         {
             return cnDesc;
@@ -137,7 +155,8 @@ public class Item : ScriptableObject {
         }
     }
 
-    public string GetRarityNative(){
+    public string GetRarityNative()
+    {
         if (PlayerManager.instance.LANGUAGE == PlayerManager.DEVICE_LANGUAGE.EN)
         {
             return Localizer.GetENRarity(this);
@@ -164,16 +183,5 @@ public class Item : ScriptableObject {
         }
     }
 
-    public Item(string id, string enName, string krName, string jpName, string cnName, string cntName, int sellingCost, Rarity rarity, Sprite sprite){
-        this.inventoryId = ItemMD5Generator.MD5Hash(id);
-        this.id = id;
-        this.enName = enName;
-		this.krName = krName;
-		this.jpName = jpName;
-        this.cnName = cnName;
-        this.cntName = cntName;
-        this.sellingCost = sellingCost;
-        this.rarity = rarity;
-        this.sprite = sprite;
-    }
+    #endregion
 }

@@ -24,9 +24,7 @@ public class SlotUIListener : MonoBehaviour {
         b_Drop.onClick.AddListener(Drop);
     }
 
-    public void OnNotify(GameItem item){
-        thisItem = item;
-
+    public void ActiveAllHolders(){
         thisImage.enabled = true;
         i_Coin.gameObject.SetActive(true);
         i_SpriteItem.gameObject.SetActive(true);
@@ -35,8 +33,29 @@ public class SlotUIListener : MonoBehaviour {
         t_ItemName.gameObject.SetActive(true);
         t_Rarity.gameObject.SetActive(true);
         t_SellingCost.gameObject.SetActive(true);
-		b_Forge.gameObject.SetActive(true);
+        b_Forge.gameObject.SetActive(true);
         b_Drop.gameObject.SetActive(true);
+    }
+
+    public void InactiveAllHolders(){
+        thisItem = null;
+        thisImage.enabled = false;
+        i_Coin.gameObject.SetActive(false);
+        i_SpriteItem.gameObject.SetActive(false);
+        i_SpriteOuter.gameObject.SetActive(false);
+        i_SpriteInner.gameObject.SetActive(false);
+        t_ItemName.gameObject.SetActive(false);
+        t_Rarity.gameObject.SetActive(false);
+        t_SellingCost.gameObject.SetActive(false);
+        b_Forge.gameObject.SetActive(false);
+        b_Drop.gameObject.SetActive(false);
+    }
+
+
+    public void OnNotify(GameItem item){
+        thisItem = item;
+
+        ActiveAllHolders();
 
         if (item.rarity == Item.Rarity.COMMON)
         {
@@ -78,6 +97,6 @@ public class SlotUIListener : MonoBehaviour {
     }
 
     private void Drop(){
-        
+        Inventory.instance.DeleteItem(thisItem.uid);
     }
 }

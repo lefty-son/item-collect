@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 public class Inventory : MonoBehaviour {
@@ -19,6 +19,8 @@ public class Inventory : MonoBehaviour {
             return;
         }
         inventory.Add(new GameItem(item.id, item.GetNameNative(), item.GetRarityNative(), item.defaultCost, item.sellingCost, item.rarity, item.sprite));
+
+        // Update UI
         InventoryUIListener.instance.NotifyToSlots();
         Debug.Log(item.rarity);
     }
@@ -32,8 +34,15 @@ public class Inventory : MonoBehaviour {
         Debug.Log(revenue * PlayerManager.instance.GetStatsTrade());
     }
 
-    public void DeleteItem(){
-         
+    public void DeleteItem(string _uid){
+        foreach(var item in inventory.ToArray()){
+            if(item.uid.Equals(_uid)){
+                inventory.Remove(item);
+            }
+        }
+
+        // Update UI
+        InventoryUIListener.instance.NotifyToSlots();
     }
 
     public bool IsFull(){
@@ -53,7 +62,7 @@ public class Inventory : MonoBehaviour {
 
 [System.Serializable]
 public class GameItem {
-    public string inventoryId;
+    public string uid;
     public string id;
     public string nameNative;
     public string rarityNative;
@@ -65,7 +74,8 @@ public class GameItem {
     public Sprite sprite;
 
     public GameItem(string _id, string _nameNative, string _rarityNative, int _defaultCost, int _sellingCost, Item.Rarity _rarity, Sprite _sprite){
-        inventoryId = ItemMD5Generator.MD5Hash(_id);
+        uid = ItemMD5Generator.MD5Hash(DateTime.Now.Ticks.ToString());
+        id = _id;
         nameNative = _nameNative;
         rarityNative = _rarityNative;
         forges = 0;

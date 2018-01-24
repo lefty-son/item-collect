@@ -34,7 +34,14 @@ public class InventoryUIListener : MonoBehaviour {
         }
     }
 
+    public void InactiveAllHolders(){
+        foreach(var item in slots){
+            item.InactiveAllHolders();
+        }
+    }
+
     public void NotifyToSlots(){
+        InactiveAllHolders();
         for (int i = 0; i < Inventory.instance.inventory.Count; i++){
             slots[i].OnNotify(Inventory.instance.inventory[i]);
         }
