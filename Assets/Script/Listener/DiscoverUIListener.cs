@@ -16,6 +16,8 @@ public class DiscoverUIListener : MonoBehaviour {
     public Sprite sp_LegendaryOuter, sp_LegendaryInner;
     public Sprite sp_AncientOuter, sp_AncientInner;
 
+    [SerializeField]
+    private Item.Rarity highestRarity;
 
     public void OpenChest(int i){
         chests[i].interactable = false;
@@ -45,35 +47,51 @@ public class DiscoverUIListener : MonoBehaviour {
             chests[i].interactable = true;
             chests[i].gameObject.SetActive(true);
 
+            // Set highest rarity
+            SetHighestRarity(items[i].rarity);
 
             /* Set as rarity */
             if (items[i].rarity == Item.Rarity.COMMON)
             {
-                i_BGGradient.color = ItemColorDefine.COMMON_BG_GRADIENT_COLOR;
                 t_ItemName[i].color = ItemColorDefine.COMMON_TEXT_COLOR;
                 i_SpriteOuter[i].sprite = sp_CommonOuter;
                 i_SpriteInner[i].sprite = sp_CommonInner;
             }
             else if (items[i].rarity == Item.Rarity.RARE)
             {
-                i_BGGradient.color = ItemColorDefine.RARE_BG_GRADIENT_COLOR;
                 t_ItemName[i].color = ItemColorDefine.RARE_TEXT_COLOR;
                 i_SpriteOuter[i].sprite = sp_RareOuter;
                 i_SpriteInner[i].sprite = sp_RareInner;
             }
             else if (items[i].rarity == Item.Rarity.LEGENDARY)
             {
-                i_BGGradient.color = ItemColorDefine.LGD_BG_GRADIENT_COLOR;
                 t_ItemName[i].color = ItemColorDefine.LGD_TEXT_COLOR;
                 i_SpriteOuter[i].sprite = sp_LegendaryOuter;
                 i_SpriteInner[i].sprite = sp_LegendaryInner;
             }
             else
             {
-                i_BGGradient.color = ItemColorDefine.ANCIENT_BG_GRADIENT_COLOR;
                 t_ItemName[i].color = ItemColorDefine.ANCIENT_TEXT_COLOR;
                 i_SpriteOuter[i].sprite = sp_AncientOuter;
                 i_SpriteInner[i].sprite = sp_AncientInner;
+            }
+
+            // Set BGGradient color as highest rarity
+            if(highestRarity == Item.Rarity.COMMON){
+                i_BGGradient.color = ItemColorDefine.COMMON_BG_GRADIENT_COLOR;
+            }
+            else if(highestRarity == Item.Rarity.RARE){
+                i_BGGradient.color = ItemColorDefine.RARE_BG_GRADIENT_COLOR;
+
+            }
+            else if (highestRarity == Item.Rarity.LEGENDARY)
+            {
+                i_BGGradient.color = ItemColorDefine.LGD_BG_GRADIENT_COLOR;
+
+            }
+            else {
+                i_BGGradient.color = ItemColorDefine.ANCIENT_BG_GRADIENT_COLOR;
+
             }
             /* ------------- */
 
@@ -84,6 +102,25 @@ public class DiscoverUIListener : MonoBehaviour {
 
     private void OnDisable()
     {
-        tempSlots[3].SetActive(false);
+        for (int i = 0; i < 4; i++){
+            t_ItemName[i].gameObject.SetActive(false);
+            i_SpriteItem[i].gameObject.SetActive(false);
+            i_SpriteOuter[i].gameObject.SetActive(false);
+            i_SpriteInner[i].gameObject.SetActive(false);
+            t_Cost[i].gameObject.SetActive(false);
+            i_Coin[i].gameObject.SetActive(false);
+
+            tempSlots[i].SetActive(false);
+            //chests[i].interactable = true;
+            //chests[i].gameObject.SetActive(true);
+        }
+        highestRarity = Item.Rarity.COMMON;
+
+    }
+
+    private void SetHighestRarity(Item.Rarity _rarity){
+        if(_rarity >= highestRarity){
+            highestRarity = _rarity;
+        }
     }
 }

@@ -27,7 +27,7 @@ public class InventoryUIListener : MonoBehaviour {
     }
 
     public void MakeSlots(){
-        var size = PlayerManager.instance.GetStatsBagSize();
+        var size = PlayerManager.instance.GetStatsBagSizeValue();
         for (int i = 0; i < size; i++){
             GameObject slot = Instantiate(slotPrefab, transform.position, Quaternion.identity, transform);
             slots.Add(slot.GetComponent<SlotUIListener>());

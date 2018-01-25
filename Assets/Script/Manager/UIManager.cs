@@ -16,8 +16,12 @@ public class UIManager : MonoBehaviour
     /* Farm Panel */
     public Animation a_Farm;
     public Button b_Archive;
-    public GameObject p_Farm, p_Discover, p_DiscoverHelper, p_AlertFullInventory;
+    public GameObject p_Farm, p_Discover, p_DiscoverHelper;
     /* ---------- */
+
+    /* Forge Panel */
+    public GameObject p_Forge;
+    /* ----------- */
 
     private void Awake()
     {
@@ -131,7 +135,7 @@ public class UIManager : MonoBehaviour
     private void OnConfirm()
     {
         OffDiscover();
-        OnFarm();
+        //OnFarm();
     }
 
     public void OnClickSellNow()

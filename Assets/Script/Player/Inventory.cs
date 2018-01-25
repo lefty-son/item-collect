@@ -16,7 +16,7 @@ public class Inventory : MonoBehaviour {
         if(IsFullWithLeftOver(items.Count)){
             // Partially add items
             ItemShuffle.Shuffle(items);
-            var leftOver = PlayerManager.instance.GetStatsBagSize() - inventory.Count;
+            var leftOver = PlayerManager.instance.GetStatsBagSizeValue() - inventory.Count;
             Debug.LogFormat("Add {0} items", leftOver);
             for (int i = 0; i < leftOver; i++){
                 inventory.Add(new GameItem(items[i]));
@@ -42,7 +42,6 @@ public class Inventory : MonoBehaviour {
             revenue += item.sellingCost;
         }
         inventory.Clear();
-        Debug.Log(revenue * PlayerManager.instance.GetStatsTrade());
     }
 
     public void DeleteItem(string _uid){
@@ -57,7 +56,7 @@ public class Inventory : MonoBehaviour {
     }
 
     public bool IsFull(){
-        if(inventory.Count> PlayerManager.instance.GetStatsBagSize()){
+        if(inventory.Count> PlayerManager.instance.GetStatsBagSizeValue()){
             return true;
         }
         else {
@@ -66,7 +65,7 @@ public class Inventory : MonoBehaviour {
     }
 
     public bool IsFullWithLeftOver(int count){
-        if (inventory.Count + count > PlayerManager.instance.GetStatsBagSize())
+        if (inventory.Count + count > PlayerManager.instance.GetStatsBagSizeValue())
         {
             return true;
         }

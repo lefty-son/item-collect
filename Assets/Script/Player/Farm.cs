@@ -8,6 +8,8 @@ public class Farm : MonoBehaviour
 
     public static Farm instance;
 
+    private readonly int LUCK_CONSTANT = 50;
+
     public Slider farmSlider;
     [SerializeField]
     private bool farmable;
@@ -91,10 +93,10 @@ public class Farm : MonoBehaviour
     public void Roll()
     {
        
-        var luck = Random.Range(1, 101);
 
         // Basic roll
-        for (int i = 0; i < 3; i++){
+
+        for (int i = 0; i < 1; i++){
             var r = Random.Range(0, 100);
             if (r <= COMMON_CHANCE)
             {
@@ -115,24 +117,28 @@ public class Farm : MonoBehaviour
         }
 
         // Luck it out
-        if (luck <= 50)
+        for (int j = 0; j < 3; j++)
         {
-            var r = Random.Range(0, 100);
-            if (r <= COMMON_CHANCE)
-            {
-                tempItem.Add(PickCommon());
-            }
-            else if (r <= RARE_CHANCE)
-            {
-                tempItem.Add(PickRare());
-            }
-            else if (r <= LEGENDARY_CHANCE)
-            {
-                tempItem.Add(PickLegendary());
-            }
-            else
-            {
-                tempItem.Add(PickAncient());
+            var luck = Random.Range(1, 101);
+            var luckStats = PlayerManager.instance.GetStatsLuckValue();
+            if(luck <= LUCK_CONSTANT + luckStats){
+                var r = Random.Range(0, 100);
+                if (r <= COMMON_CHANCE)
+                {
+                    tempItem.Add(PickCommon());
+                }
+                else if (r <= RARE_CHANCE)
+                {
+                    tempItem.Add(PickRare());
+                }
+                else if (r <= LEGENDARY_CHANCE)
+                {
+                    tempItem.Add(PickLegendary());
+                }
+                else
+                {
+                    tempItem.Add(PickAncient());
+                }
             }
         }
     }
