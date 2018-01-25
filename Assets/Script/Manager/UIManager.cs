@@ -15,7 +15,7 @@ public class UIManager : MonoBehaviour
 
     /* Farm Panel */
     public Animation a_Farm;
-    public Button b_SellNow, b_Archive;
+    public Button b_Archive;
     public GameObject p_Farm, p_Discover, p_DiscoverHelper, p_AlertFullInventory;
     /* ---------- */
 
@@ -28,8 +28,6 @@ public class UIManager : MonoBehaviour
         b_Travel.onClick.AddListener(OnTravel);
         b_Reward.onClick.AddListener(OnReward);
         b_Settings.onClick.AddListener(OnSettings);
-
-        b_SellNow.onClick.AddListener(OnClickSellNow);
         b_Archive.onClick.AddListener(OnClickArchive);
     }
 
