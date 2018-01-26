@@ -21,7 +21,6 @@ public class Inventory : MonoBehaviour {
             for (int i = 0; i < leftOver; i++){
                 inventory.Add(new GameItem(items[i]));
             }
-
         }
         else {
             foreach (var item in items)
@@ -33,7 +32,7 @@ public class Inventory : MonoBehaviour {
 
 
         // Update UI
-        InventoryUIListener.instance.NotifyToSlots();
+        //InventoryUIListener.instance.NotifyToSlots();
     }
 
     public void SellAllItems(){
@@ -44,14 +43,8 @@ public class Inventory : MonoBehaviour {
         inventory.Clear();
     }
 
-    public void DeleteItem(string _uid){
-        foreach(var item in inventory.ToArray()){
-            if(item.uid.Equals(_uid)){
-                inventory.Remove(item);
-            }
-        }
-
-        // Update UI
+    public void DeleteItem(GameItem item){
+		inventory.Remove(item);
         InventoryUIListener.instance.NotifyToSlots();
     }
 
@@ -93,20 +86,20 @@ public class GameItem {
     public int defaultCost;
     public int sellingCost;
     public Item.Rarity rarity;
-
     public Sprite sprite;
 
-    public GameItem(string _id, string _nameNative, string _rarityNative, int _defaultCost, int _sellingCost, Item.Rarity _rarity, Sprite _sprite){
-        uid = ItemMD5Generator.MD5Hash(DateTime.Now.Ticks.ToString());
-        id = _id;
-        nameNative = _nameNative;
-        rarityNative = _rarityNative;
-        forges = 0;
-        defaultCost = _defaultCost;
-        sellingCost = _sellingCost;
-        rarity = _rarity;
-        sprite = _sprite;
-    }
+
+    #region Custom Props
+
+    public int forgeLevel;
+
+    // [-50...+50]
+    public float firstMarketPrice;
+    public float secondMarketPrice;
+    public float thirdMarketPrice;
+
+    #endregion
+
 
     public GameItem(Item item){
         uid = ItemMD5Generator.MD5Hash(DateTime.Now.Ticks.ToString());
@@ -118,6 +111,11 @@ public class GameItem {
         sellingCost = item.sellingCost;
         rarity = item.rarity;
         sprite = item.sprite;
+        forgeLevel = 0;
+        firstMarketPrice = UnityEngine.Random.Range(-50f, 50f);
+        secondMarketPrice = UnityEngine.Random.Range(-50f, 50f);
+        thirdMarketPrice = UnityEngine.Random.Range(-50f, 50f);
     }
+
 }
 

@@ -15,7 +15,6 @@ public class UIManager : MonoBehaviour
 
     /* Farm Panel */
     public Animation a_Farm;
-    public Button b_Archive;
     public GameObject p_Farm, p_Discover, p_DiscoverHelper;
     /* ---------- */
 
@@ -32,7 +31,6 @@ public class UIManager : MonoBehaviour
         b_Travel.onClick.AddListener(OnTravel);
         b_Reward.onClick.AddListener(OnReward);
         b_Settings.onClick.AddListener(OnSettings);
-        b_Archive.onClick.AddListener(OnClickArchive);
     }
 
 
@@ -49,8 +47,8 @@ public class UIManager : MonoBehaviour
 
     public void OnInventory()
     {
+        Debug.Log("inv");
         p_Inventory.SetActive(true);
-        p_Inventory.transform.SetAsLastSibling();
 
         p_Growth.SetActive(false);
         p_Travel.SetActive(false);
@@ -61,7 +59,6 @@ public class UIManager : MonoBehaviour
     public void OnGrowth()
     {
         p_Growth.SetActive(true);
-        p_Growth.transform.SetAsLastSibling();
 
         p_Inventory.SetActive(false);
         p_Travel.SetActive(false);
@@ -72,7 +69,6 @@ public class UIManager : MonoBehaviour
     public void OnTravel()
     {
         p_Travel.SetActive(true);
-        p_Travel.transform.SetAsLastSibling();
 
         p_Inventory.SetActive(false);
         p_Growth.SetActive(false);
@@ -84,7 +80,6 @@ public class UIManager : MonoBehaviour
     public void OnReward()
     {
         p_Reward.SetActive(true);
-        p_Reward.transform.SetAsLastSibling();
 
         p_Inventory.SetActive(false);
         p_Growth.SetActive(false);
@@ -95,7 +90,6 @@ public class UIManager : MonoBehaviour
     public void OnSettings()
     {
         p_Settings.SetActive(true);
-        p_Settings.transform.SetAsLastSibling();
 
         p_Inventory.SetActive(false);
         p_Growth.SetActive(false);
@@ -110,9 +104,9 @@ public class UIManager : MonoBehaviour
 
     public void OnFarm()
     {
-		p_Farm.SetActive(true);
-		a_Farm.Play();
-		Farm.instance.Init();
+        p_Farm.SetActive(true);
+        a_Farm.Play();
+        Farm.instance.Init();
     }
 
     public void OffFarm()
@@ -135,17 +129,26 @@ public class UIManager : MonoBehaviour
     private void OnConfirm()
     {
         OffDiscover();
-        //OnFarm();
     }
 
-    public void OnClickSellNow()
+    public void OnClickArchive()
     {
-        OnConfirm();
-    }
-
-    public void OnClickArchive(){
         Inventory.instance.AddItem(Farm.instance.GetTempItem());
         OnConfirm();
+    }
+
+    #endregion
+
+
+    #region Forge
+
+
+    public void OnForge(){
+        p_Forge.SetActive(true);
+    }
+
+    public void OffForge(){
+        p_Forge.SetActive(false);
     }
 
     #endregion

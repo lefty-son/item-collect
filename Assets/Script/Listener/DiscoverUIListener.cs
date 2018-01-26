@@ -16,8 +16,13 @@ public class DiscoverUIListener : MonoBehaviour {
     public Sprite sp_LegendaryOuter, sp_LegendaryInner;
     public Sprite sp_AncientOuter, sp_AncientInner;
 
+    public Animation[] a_TempSlotShrink;
+
     [SerializeField]
     private Item.Rarity highestRarity;
+
+    private int chestCount;
+    private int openChestCount;
 
     public void OpenChest(int i){
         chests[i].interactable = false;
@@ -28,12 +33,29 @@ public class DiscoverUIListener : MonoBehaviour {
         i_SpriteInner[i].gameObject.SetActive(true);
         t_Cost[i].gameObject.SetActive(true);
         i_Coin[i].gameObject.SetActive(true);
+
+        openChestCount++;
+        if(openChestCount >= chestCount){
+            StartCoroutine(ShrinkAnim());
+        }
     }
+
+    private IEnumerator ShrinkAnim(){
+        yield return new WaitForSeconds(2f);
+        foreach(var anim in a_TempSlotShrink){
+            anim.Play();
+            yield return new WaitForSeconds(0.2f);
+        }
+        UIManager.instance.OnClickArchive();
+    }
+
 
 
     private void OnEnable()
     {
         var items = Farm.instance.GetTempItem();
+        chestCount = items.Count;
+        openChestCount = 0;
 
         for (int i = 0; i < items.Count; i++){
             t_ItemName[i].gameObject.SetActive(false);
@@ -115,7 +137,6 @@ public class DiscoverUIListener : MonoBehaviour {
             //chests[i].gameObject.SetActive(true);
         }
         highestRarity = Item.Rarity.COMMON;
-
     }
 
     private void SetHighestRarity(Item.Rarity _rarity){

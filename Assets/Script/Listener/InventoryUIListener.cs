@@ -23,6 +23,9 @@ public class InventoryUIListener : MonoBehaviour {
 
     private void OnEnable()
     {
+        if(slots.Count == 0){
+            MakeSlots();
+        }
         NotifyToSlots();
     }
 

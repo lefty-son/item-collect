@@ -6,6 +6,14 @@ public class GameManager : MonoBehaviour {
 
     public static GameManager instance;
 
+
+    #region Config
+
+    public readonly int MAX_FORGE_LEVEL = 12;
+
+
+    #endregion
+
     [SerializeField]
     private bool isPlaying;
     public bool IsPlaying

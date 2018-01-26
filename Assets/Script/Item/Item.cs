@@ -28,6 +28,7 @@ public class Item : ScriptableObject
     public enum Rarity { COMMON, RARE, LEGENDARY, ANCIENT }
     public Rarity rarity;
     public Sprite sprite;
+    //public int forgeLevel;
 
     #endregion
 
