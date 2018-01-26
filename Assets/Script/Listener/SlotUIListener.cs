@@ -94,9 +94,9 @@ public class SlotUIListener : MonoBehaviour {
             i_SpriteInner.sprite = sp_AncientInner;
         }
 
-        t_ItemName.text = item.nameNative;
+        t_ItemName.text = item.GetNameByForgeLevel();
         t_Rarity.text = item.rarityNative;
-        t_SellingCost.text = item.sellingCost.ToString();
+        t_SellingCost.text = item.GetCurrentPriceByForgeLevel().ToString();
         i_SpriteItem.sprite = item.sprite;
 
         t_AMarketPrice.text = GetFormattedMarketPrice(item.firstMarketPrice);

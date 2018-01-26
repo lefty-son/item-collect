@@ -47,7 +47,6 @@ public class UIManager : MonoBehaviour
 
     public void OnInventory()
     {
-        Debug.Log("inv");
         p_Inventory.SetActive(true);
 
         p_Growth.SetActive(false);
@@ -133,7 +132,7 @@ public class UIManager : MonoBehaviour
 
     public void OnClickArchive()
     {
-        Inventory.instance.AddItem(Farm.instance.GetTempItem());
+        Inventory.instance.AddItem(Farm.instance.GetTempItem(false));
         OnConfirm();
     }
 

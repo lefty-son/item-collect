@@ -34,11 +34,11 @@ public class ForgeUIListener : MonoBehaviour {
         i_Outer.sprite = outer;
         i_Inner.sprite = inner;
         i_ItemSprite.sprite = item.sprite;
-        t_Name.text = item.nameNative;
+        t_Name.text = item.GetNameByForgeLevel();
         t_Name.color = color;
-        t_CurrentPrice.text = ForgeCalculator.GetCurrentPrice(item.forgeLevel, item.sellingCost).ToString();
-        t_NextPrice.text = ForgeCalculator.GetNextPrice(item.forgeLevel, item.sellingCost).ToString();
-        t_ForgePrice.text = ForgeCalculator.GetCost(item.forgeLevel, item.sellingCost).ToString();
+        t_CurrentPrice.text = item.GetCurrentPriceByForgeLevel().ToString();
+        t_NextPrice.text = item.GetNextPriceByForgeLevel().ToString();
+        t_ForgePrice.text = item.GetForgeCostByForgeLevel().ToString();
 
         var stb = new StringBuilder(ForgeCalculator.GetProbability(item.forgeLevel).ToString());
         stb.Append("%");
@@ -54,7 +54,7 @@ public class ForgeUIListener : MonoBehaviour {
             isForgeDone = true;
             isForgeQueued = false;
             slider.value = 0;
-            ShowForgeResult(ForgeCalculator.GetProbability(forgeItem.forgeLevel));
+            ShowForgeResult(forgeItem.GetForgeProbabilityByForgeLevel());
         }
     }
 

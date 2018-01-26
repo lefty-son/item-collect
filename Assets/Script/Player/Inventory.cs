@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Collections.Generic;
 using UnityEngine;
 public class Inventory : MonoBehaviour {
@@ -12,20 +13,20 @@ public class Inventory : MonoBehaviour {
         inventory = new List<GameItem>();
     }
 
-    public void AddItem(List<Item> items){
+    public void AddItem(List<GameItem> items){
         if(IsFullWithLeftOver(items.Count)){
             // Partially add items
             ItemShuffle.Shuffle(items);
             var leftOver = PlayerManager.instance.GetStatsBagSizeValue() - inventory.Count;
             Debug.LogFormat("Add {0} items", leftOver);
             for (int i = 0; i < leftOver; i++){
-                inventory.Add(new GameItem(items[i]));
+                inventory.Add(items[i]);
             }
         }
         else {
             foreach (var item in items)
             {
-                inventory.Add(new GameItem(item));
+                inventory.Add(item);
             }
         }
 
@@ -115,6 +116,31 @@ public class GameItem {
         firstMarketPrice = UnityEngine.Random.Range(-50f, 50f);
         secondMarketPrice = UnityEngine.Random.Range(-50f, 50f);
         thirdMarketPrice = UnityEngine.Random.Range(-50f, 50f);
+    }
+
+    public string GetNameByForgeLevel(){
+        var stb = new StringBuilder(nameNative);
+        stb.Append(" (+");
+        stb.Append(forgeLevel);
+        stb.Append(")");
+        return stb.ToString();
+    }
+
+
+    public int GetCurrentPriceByForgeLevel(){
+        return ForgeCalculator.GetCurrentPrice(forgeLevel, sellingCost);
+    }
+
+    public int GetNextPriceByForgeLevel(){
+        return ForgeCalculator.GetNextPrice(forgeLevel, sellingCost);
+    }
+
+    public int GetForgeCostByForgeLevel(){
+        return ForgeCalculator.GetCost(forgeLevel, GetCurrentPriceByForgeLevel());
+    }
+
+    public int GetForgeProbabilityByForgeLevel(){
+        return ForgeCalculator.GetProbability(forgeLevel);
     }
 
 }

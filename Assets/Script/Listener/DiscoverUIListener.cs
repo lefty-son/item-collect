@@ -42,9 +42,9 @@ public class DiscoverUIListener : MonoBehaviour {
 
     private IEnumerator ShrinkAnim(){
         yield return new WaitForSeconds(2f);
-        foreach(var anim in a_TempSlotShrink){
-            anim.Play();
-            yield return new WaitForSeconds(0.2f);
+        for (int i = 0; i < chestCount; i++){
+            a_TempSlotShrink[i].Play();
+			yield return new WaitForSeconds(0.2f);
         }
         UIManager.instance.OnClickArchive();
     }
@@ -53,7 +53,8 @@ public class DiscoverUIListener : MonoBehaviour {
 
     private void OnEnable()
     {
-        var items = Farm.instance.GetTempItem();
+        var items = Farm.instance.GetTempItem(true);
+
         chestCount = items.Count;
         openChestCount = 0;
 
@@ -65,7 +66,9 @@ public class DiscoverUIListener : MonoBehaviour {
             t_Cost[i].gameObject.SetActive(false);
             i_Coin[i].gameObject.SetActive(false);
 
+
             tempSlots[i].SetActive(true);
+            tempSlots[i].transform.localScale = Vector3.one * 1;
             chests[i].interactable = true;
             chests[i].gameObject.SetActive(true);
 
@@ -117,7 +120,8 @@ public class DiscoverUIListener : MonoBehaviour {
             }
             /* ------------- */
 
-            t_ItemName[i].text = items[i].GetNameNative();
+            t_ItemName[i].text = items[i].GetNameByForgeLevel();
+            t_Cost[i].text = items[i].GetCurrentPriceByForgeLevel().ToString();
             i_SpriteItem[i].sprite = items[i].sprite;
         }
     }
@@ -132,6 +136,8 @@ public class DiscoverUIListener : MonoBehaviour {
             t_Cost[i].gameObject.SetActive(false);
             i_Coin[i].gameObject.SetActive(false);
 
+
+            tempSlots[i].transform.localScale = Vector3.one;
             tempSlots[i].SetActive(false);
             //chests[i].interactable = true;
             //chests[i].gameObject.SetActive(true);
