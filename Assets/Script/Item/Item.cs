@@ -25,29 +25,29 @@ public class Item : ScriptableObject
 
     #region SETTER
 
-    public Item.Rarity SetRarityRamdomly()
+    public void SetRarityRamdomly()
     {
         var r = UnityEngine.Random.Range(0, 100);
         if (r <= Farm.COMMON_CHANCE)
         {
-            return Item.Rarity.COMMON;
+            SetCommon();
         }
         else if (r <= Farm.RARE_CHANCE)
         {
-            return Item.Rarity.RARE;
+            SetRare();
         }
         else if (r <= Farm.LEGENDARY_CHANCE)
         {
-            return Item.Rarity.LEGENDARY;
+            SetLegendray();
         }
         else
         {
-            return Item.Rarity.ANCIENT;
+            SetAncient();
         }
     }
 
-    public int SetForgeLevelRandomly(){
-        return Random.Range(0, 4);
+    public void SetForgeLevelRandomly(){
+        forgeLevel = Random.Range(0, 4);
     }
 
     public void SetCommon()

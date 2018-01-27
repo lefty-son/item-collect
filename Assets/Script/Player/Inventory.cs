@@ -14,12 +14,6 @@ public class Inventory : MonoBehaviour {
         if (instance == null) instance = this;
         inventory = new List<GameItem>();
         InitializeGameItem();
-
-        DateTime fuck = new DateTime(2000, 01, 01);
-
-        Debug.Log(DateTime.Now.Ticks - fuck.Ticks);
-        Debug.Log(fuck.Ticks);
-        Debug.Log(DateTime.Now.Ticks);
     }
 
     private void InitializeGameItem(){
@@ -44,6 +38,7 @@ public class Inventory : MonoBehaviour {
                     leftItemIndex++;
                 }
             }
+
         }
         else {
             var getItemIndex = 0;
@@ -57,8 +52,13 @@ public class Inventory : MonoBehaviour {
                     getItemIndex++;
                 }
             }
-           
         }
+
+        // Update UI
+        if(InventoryUIListener.instance){
+            InventoryUIListener.instance.NotifyToSlots();
+        }
+
     }
 
     private void PushAndSortInventory(){
@@ -246,6 +246,10 @@ public class GameItem
         stb.Append(forgeLevel);
         stb.Append(")");
         return stb.ToString();
+    }
+
+    public int GetPreviousPriceByForgeLevel(){
+        return ForgeCalculator.GetPreviousPrice(forgeLevel, sellingCost);
     }
 
     public int GetCurrentPriceByForgeLevel()

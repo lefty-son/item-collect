@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
 
+    public AnimationCurve curvez;
 
     /* Under Panel */
     public Button b_Inventory, b_Growth, b_Travel, b_Reward, b_Settings;
@@ -22,6 +23,8 @@ public class UIManager : MonoBehaviour
     public GameObject p_Forge;
     /* ----------- */
 
+    public Image i_Fading;
+
     private void Awake()
     {
         if (instance == null) instance = this;
@@ -31,6 +34,23 @@ public class UIManager : MonoBehaviour
         b_Travel.onClick.AddListener(OnTravel);
         b_Reward.onClick.AddListener(OnReward);
         b_Settings.onClick.AddListener(OnSettings);
+    }
+
+    public void StartFadeOut(){
+        StartCoroutine(FadeOut());
+    }
+
+    private IEnumerator FadeOut()
+    {
+        var t = 0f;
+        i_Fading.gameObject.SetActive(true);
+        while (t <= 1.25f)
+        {
+            t += Time.deltaTime;
+            yield return null;
+            i_Fading.color = new Color(0.7f, 0.7f, 0.7f, curvez.Evaluate(1.25f - t));
+        }
+        i_Fading.gameObject.SetActive(false);
     }
 
 

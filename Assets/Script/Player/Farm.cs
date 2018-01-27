@@ -105,8 +105,8 @@ public class Farm : MonoBehaviour
 
     private void RandomizeItemProps(){
         foreach(Item item in tempItem){
-            item.rarity = item.SetRarityRamdomly();
-            item.forgeLevel = item.SetForgeLevelRandomly();
+            item.SetRarityRamdomly();
+            item.SetForgeLevelRandomly();
         }
     }
 
