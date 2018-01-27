@@ -49,11 +49,9 @@ public class DiscoverUIListener : MonoBehaviour {
         UIManager.instance.OnClickArchive();
     }
 
-
-
     private void OnEnable()
     {
-        var items = Farm.instance.GetTempItem(true);
+        var items = Farm.instance.GetTempItem();
 
         chestCount = items.Count;
         openChestCount = 0;
@@ -65,7 +63,6 @@ public class DiscoverUIListener : MonoBehaviour {
             i_SpriteInner[i].gameObject.SetActive(false);
             t_Cost[i].gameObject.SetActive(false);
             i_Coin[i].gameObject.SetActive(false);
-
 
             tempSlots[i].SetActive(true);
             tempSlots[i].transform.localScale = Vector3.one * 1;
@@ -107,16 +104,13 @@ public class DiscoverUIListener : MonoBehaviour {
             }
             else if(highestRarity == Item.Rarity.RARE){
                 i_BGGradient.color = ItemColorDefine.RARE_BG_GRADIENT_COLOR;
-
             }
             else if (highestRarity == Item.Rarity.LEGENDARY)
             {
                 i_BGGradient.color = ItemColorDefine.LGD_BG_GRADIENT_COLOR;
-
             }
             else {
                 i_BGGradient.color = ItemColorDefine.ANCIENT_BG_GRADIENT_COLOR;
-
             }
             /* ------------- */
 
@@ -136,11 +130,8 @@ public class DiscoverUIListener : MonoBehaviour {
             t_Cost[i].gameObject.SetActive(false);
             i_Coin[i].gameObject.SetActive(false);
 
-
             tempSlots[i].transform.localScale = Vector3.one;
             tempSlots[i].SetActive(false);
-            //chests[i].interactable = true;
-            //chests[i].gameObject.SetActive(true);
         }
         highestRarity = Item.Rarity.COMMON;
     }

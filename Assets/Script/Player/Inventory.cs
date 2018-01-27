@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Inventory : MonoBehaviour {
 
+
+
     public static Inventory instance;
     public List<GameItem> inventory;
 
@@ -11,29 +13,60 @@ public class Inventory : MonoBehaviour {
     {
         if (instance == null) instance = this;
         inventory = new List<GameItem>();
+        InitializeGameItem();
+
+        DateTime fuck = new DateTime(2000, 01, 01);
+
+        Debug.Log(DateTime.Now.Ticks - fuck.Ticks);
+        Debug.Log(fuck.Ticks);
+        Debug.Log(DateTime.Now.Ticks);
     }
 
-    public void AddItem(List<GameItem> items){
+    private void InitializeGameItem(){
+        for (int i = 0; i < PlayerManager.instance.GetStatsBagSizeValue(); i++){
+            inventory.Add(new GameItem());
+        }
+    }
+
+    public void AddItem(List<Item> items){
         if(IsFullWithLeftOver(items.Count)){
             // Partially add items
             ItemShuffle.Shuffle(items);
-            var leftOver = PlayerManager.instance.GetStatsBagSizeValue() - inventory.Count;
-            Debug.LogFormat("Add {0} items", leftOver);
-            for (int i = 0; i < leftOver; i++){
-                inventory.Add(items[i]);
+            var leftOver = PlayerManager.instance.GetStatsBagSizeValue() - GetAllocatedInventory();
+			Debug.LogFormat("have {0} and left {1}", GetAllocatedInventory(), leftOver);
+            var leftItemIndex = 0;
+            foreach(var inv in inventory){
+                if(leftItemIndex == leftOver){
+                    break;
+                }
+                if(!inv.isAllocated){
+                    inv.OverwriteInstance(items[leftItemIndex]);
+                    leftItemIndex++;
+                }
             }
         }
         else {
-            foreach (var item in items)
-            {
-                inventory.Add(item);
+            var getItemIndex = 0;
+            foreach(var inv in inventory){
+                if(getItemIndex==items.Count){
+                    break;
+                }
+
+                if(!inv.isAllocated){
+                    inv.OverwriteInstance(items[getItemIndex]);
+                    getItemIndex++;
+                }
             }
+           
         }
+    }
 
-
-
-        // Update UI
-        //InventoryUIListener.instance.NotifyToSlots();
+    private void PushAndSortInventory(){
+        inventory.Sort(
+        delegate (GameItem item1, GameItem item2) {
+            return item1.timeStamp.CompareTo(item2.timeStamp);
+        }
+        );
     }
 
     public void SellAllItems(){
@@ -45,12 +78,14 @@ public class Inventory : MonoBehaviour {
     }
 
     public void DeleteItem(GameItem item){
-		inventory.Remove(item);
+        var removeIndex = inventory.IndexOf(item);
+        inventory[removeIndex].ClearInstance();
+        PushAndSortInventory();
         InventoryUIListener.instance.NotifyToSlots();
     }
 
     public bool IsFull(){
-        if(inventory.Count> PlayerManager.instance.GetStatsBagSizeValue()){
+        if(GetAllocatedInventory() > PlayerManager.instance.GetStatsBagSizeValue()){
             return true;
         }
         else {
@@ -59,7 +94,7 @@ public class Inventory : MonoBehaviour {
     }
 
     public bool IsFullWithLeftOver(int count){
-        if (inventory.Count + count > PlayerManager.instance.GetStatsBagSizeValue())
+        if (GetAllocatedInventory() + count > PlayerManager.instance.GetStatsBagSizeValue())
         {
             return true;
         }
@@ -69,25 +104,43 @@ public class Inventory : MonoBehaviour {
         }
     }
 
-    public GameItem GetLastItem(){
-        return inventory[inventory.Count - 1];
+    private int GetAllocatedInventory(){
+        var count = 0;
+        foreach(var inv in inventory){
+            if(inv.isAllocated){
+                count++;
+            }
+        }
+        return count;
     }
+
+    //public GameItem GetLastItem(){
+        
+    //    for (int i = 0; i < inventory.Count;i++){
+    //        if(!inventory[i].isAllocated){
+    //            return inventory[i - 1];
+    //        }
+    //    }
+    //    return inventory[inventory.Count - 1];
+    //}
 
 
 
 }
 
 [System.Serializable]
-public class GameItem {
+public class GameItem
+{
     public string uid;
+    public long timeStamp;
     public string id;
     public string nameNative;
     public string rarityNative;
-    public int forges;
     public int defaultCost;
     public int sellingCost;
     public Item.Rarity rarity;
     public Sprite sprite;
+    public bool isAllocated;
 
 
     #region Custom Props
@@ -102,23 +155,92 @@ public class GameItem {
     #endregion
 
 
-    public GameItem(Item item){
+    //public GameItem(Item item)
+    //{
+    //    uid = ItemMD5Generator.MD5Hash(DateTime.Now.Ticks.ToString());
+    //    id = item.id;
+    //    nameNative = item.GetNameNative();
+    //    rarityNative = item.GetRarityNative();
+    //    forges = 0;
+    //    defaultCost = item.defaultCost;
+    //    sellingCost = item.sellingCost;
+    //    rarity = GetRarityRamdonly();
+    //    sprite = item.sprite;
+
+    //    forgeLevel = 0;
+    //    firstMarketPrice = UnityEngine.Random.Range(-50f, 50f);
+    //    secondMarketPrice = UnityEngine.Random.Range(-50f, 50f);
+    //    thirdMarketPrice = UnityEngine.Random.Range(-50f, 50f);
+    //}
+
+    public GameItem(){
+        isAllocated = false;
+        timeStamp = long.MaxValue;
+    }
+
+    public void ClearInstance(){
+        isAllocated = false;
+        uid = "";
+        timeStamp = long.MaxValue;
+        id = "";
+        nameNative = "";
+        rarityNative = "";
+        defaultCost = 0;
+        sellingCost = 0;
+        rarity = Item.Rarity.COMMON;
+        sprite = null;
+
+        forgeLevel = 0;
+        firstMarketPrice = 0f;
+        secondMarketPrice = 0f;
+        thirdMarketPrice = 0f;
+    }
+
+    public void OverwriteInstance(Item item){
+        
+        isAllocated = true;
         uid = ItemMD5Generator.MD5Hash(DateTime.Now.Ticks.ToString());
+        timeStamp = DateTime.Now.Ticks;
         id = item.id;
         nameNative = item.GetNameNative();
         rarityNative = item.GetRarityNative();
-        forges = 0;
         defaultCost = item.defaultCost;
         sellingCost = item.sellingCost;
         rarity = item.rarity;
         sprite = item.sprite;
-        forgeLevel = 0;
+
+		forgeLevel = item.forgeLevel;
         firstMarketPrice = UnityEngine.Random.Range(-50f, 50f);
         secondMarketPrice = UnityEngine.Random.Range(-50f, 50f);
         thirdMarketPrice = UnityEngine.Random.Range(-50f, 50f);
     }
 
-    public string GetNameByForgeLevel(){
+
+    #region Getter
+
+    //private Item.Rarity GetRarityRamdonly()
+    //{
+    //    var r = UnityEngine.Random.Range(0, 100);
+    //    if (r <= Farm.COMMON_CHANCE)
+    //    {
+    //        return Item.Rarity.COMMON;
+    //    }
+    //    else if (r <= Farm.RARE_CHANCE)
+    //    {
+    //        return Item.Rarity.RARE;
+    //    }
+    //    else if (r <= Farm.LEGENDARY_CHANCE)
+    //    {
+    //        return Item.Rarity.LEGENDARY;
+    //    }
+    //    else
+    //    {
+    //        return Item.Rarity.ANCIENT;
+    //    }
+    //}
+
+    public string GetNameByForgeLevel()
+    {
         var stb = new StringBuilder(nameNative);
         stb.Append(" (+");
         stb.Append(forgeLevel);
@@ -126,22 +248,28 @@ public class GameItem {
         return stb.ToString();
     }
 
-
-    public int GetCurrentPriceByForgeLevel(){
+    public int GetCurrentPriceByForgeLevel()
+    {
         return ForgeCalculator.GetCurrentPrice(forgeLevel, sellingCost);
     }
 
-    public int GetNextPriceByForgeLevel(){
+    public int GetNextPriceByForgeLevel()
+    {
         return ForgeCalculator.GetNextPrice(forgeLevel, sellingCost);
     }
 
-    public int GetForgeCostByForgeLevel(){
+    public int GetForgeCostByForgeLevel()
+    {
         return ForgeCalculator.GetCost(forgeLevel, GetCurrentPriceByForgeLevel());
     }
 
-    public int GetForgeProbabilityByForgeLevel(){
+    public int GetForgeProbabilityByForgeLevel()
+    {
         return ForgeCalculator.GetProbability(forgeLevel);
     }
+
+
+    #endregion
 
 }
 

@@ -132,7 +132,7 @@ public class UIManager : MonoBehaviour
 
     public void OnClickArchive()
     {
-        Inventory.instance.AddItem(Farm.instance.GetTempItem(false));
+        Inventory.instance.AddItem(Farm.instance.GetTempItem());
         OnConfirm();
     }
 

@@ -61,50 +61,60 @@ public class SlotUIListener : MonoBehaviour {
 
 
     public void OnNotify(GameItem item){
+        
         thisItem = item;
+        if(thisItem.isAllocated){
+            gameObject.SetActive(true);
+            ActiveAllHolders();
 
-        ActiveAllHolders();
+            if (item.rarity == Item.Rarity.COMMON)
+            {
+                t_ItemName.color = ItemColorDefine.COMMON_TEXT_COLOR;
+                t_Rarity.color = ItemColorDefine.COMMON_TEXT_COLOR;
+                i_SpriteOuter.sprite = sp_CommonOuter;
+                i_SpriteInner.sprite = sp_CommonInner;
+            }
+            else if (item.rarity == Item.Rarity.RARE)
+            {
+                t_ItemName.color = ItemColorDefine.RARE_TEXT_COLOR;
+                t_Rarity.color = ItemColorDefine.RARE_TEXT_COLOR;
+                i_SpriteOuter.sprite = sp_RareOuter;
+                i_SpriteInner.sprite = sp_RareInner;
+            }
+            else if (item.rarity == Item.Rarity.LEGENDARY)
+            {
+                t_ItemName.color = ItemColorDefine.LGD_TEXT_COLOR;
+                t_Rarity.color = ItemColorDefine.LGD_TEXT_COLOR;
+                i_SpriteOuter.sprite = sp_LegendaryOuter;
+                i_SpriteInner.sprite = sp_LegendaryInner;
+            }
+            else
+            {
+                t_ItemName.color = ItemColorDefine.ANCIENT_TEXT_COLOR;
+                t_Rarity.color = ItemColorDefine.ANCIENT_TEXT_COLOR;
+                i_SpriteOuter.sprite = sp_AncientOuter;
+                i_SpriteInner.sprite = sp_AncientInner;
+            }
 
-        if (item.rarity == Item.Rarity.COMMON)
-        {
-            t_ItemName.color = ItemColorDefine.COMMON_TEXT_COLOR;
-            t_Rarity.color = ItemColorDefine.COMMON_TEXT_COLOR;
-            i_SpriteOuter.sprite = sp_CommonOuter;
-            i_SpriteInner.sprite = sp_CommonInner;
+            t_ItemName.text = item.GetNameByForgeLevel();
+            t_Rarity.text = item.rarityNative;
+            t_SellingCost.text = item.GetCurrentPriceByForgeLevel().ToString();
+            i_SpriteItem.sprite = item.sprite;
+
+            t_AMarketPrice.text = GetFormattedMarketPrice(item.firstMarketPrice);
+            t_AMarketPrice.color = GetMarketPriceColor(item.firstMarketPrice);
+            t_BMarketPrice.text = GetFormattedMarketPrice(item.secondMarketPrice);
+            t_BMarketPrice.color = GetMarketPriceColor(item.secondMarketPrice);
+            t_CMarketPrice.text = GetFormattedMarketPrice(item.thirdMarketPrice);
+            t_CMarketPrice.color = GetMarketPriceColor(item.thirdMarketPrice);
         }
-        else if (item.rarity == Item.Rarity.RARE)
-        {
-            t_ItemName.color = ItemColorDefine.RARE_TEXT_COLOR;
-            t_Rarity.color = ItemColorDefine.RARE_TEXT_COLOR;
-            i_SpriteOuter.sprite = sp_RareOuter;
-            i_SpriteInner.sprite = sp_RareInner;
-        }
-        else if (item.rarity == Item.Rarity.LEGENDARY)
-        {
-            t_ItemName.color = ItemColorDefine.LGD_TEXT_COLOR;
-            t_Rarity.color = ItemColorDefine.LGD_TEXT_COLOR;
-            i_SpriteOuter.sprite = sp_LegendaryOuter;
-            i_SpriteInner.sprite = sp_LegendaryInner;
-        }
-        else
-        {
-            t_ItemName.color = ItemColorDefine.ANCIENT_TEXT_COLOR;
-            t_Rarity.color = ItemColorDefine.ANCIENT_TEXT_COLOR;
-            i_SpriteOuter.sprite = sp_AncientOuter;
-            i_SpriteInner.sprite = sp_AncientInner;
+        else {
+            
+            InactiveAllHolders();
+            gameObject.SetActive(false);
         }
 
-        t_ItemName.text = item.GetNameByForgeLevel();
-        t_Rarity.text = item.rarityNative;
-        t_SellingCost.text = item.GetCurrentPriceByForgeLevel().ToString();
-        i_SpriteItem.sprite = item.sprite;
 
-        t_AMarketPrice.text = GetFormattedMarketPrice(item.firstMarketPrice);
-        t_AMarketPrice.color = GetMarketPriceColor(item.firstMarketPrice);
-        t_BMarketPrice.text = GetFormattedMarketPrice(item.secondMarketPrice);
-        t_BMarketPrice.color = GetMarketPriceColor(item.secondMarketPrice);
-        t_CMarketPrice.text = GetFormattedMarketPrice(item.thirdMarketPrice);
-        t_CMarketPrice.color = GetMarketPriceColor(item.thirdMarketPrice);
     }
 
     private void Forge(){

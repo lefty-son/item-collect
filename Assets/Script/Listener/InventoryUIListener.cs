@@ -13,12 +13,13 @@ public class InventoryUIListener : MonoBehaviour {
 	private void Awake()
 	{
 		if (instance == null) instance = this;
+        slots = new List<SlotUIListener>();
 	}
 
     private void Start()
     {
-        slots = new List<SlotUIListener>();
-        MakeSlots();
+        
+        //MakeSlots();
     }
 
     private void OnEnable()

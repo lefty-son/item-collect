@@ -1,18 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Text;
 using UnityEngine;
 
 public class Item : ScriptableObject
 {
-
-    #region CONFIG
-
-    private readonly int COMMON_COST_MULTIPLIER = 1;
-    private readonly int RARE_COST_MULTIPLIER = 3;
-    private readonly int LEGENDARY_COST_MULTIPLIER = 12;
-    private readonly int ANCIENT_COST_MULTIPLIER = 60;
-
-    #endregion
 
     #region PROP
 
@@ -28,36 +18,60 @@ public class Item : ScriptableObject
     public enum Rarity { COMMON, RARE, LEGENDARY, ANCIENT }
     public Rarity rarity;
     public Sprite sprite;
-    //public int forgeLevel;
+    public int forgeLevel;
 
     #endregion
 
 
-
     #region SETTER
+
+    public Item.Rarity SetRarityRamdomly()
+    {
+        var r = UnityEngine.Random.Range(0, 100);
+        if (r <= Farm.COMMON_CHANCE)
+        {
+            return Item.Rarity.COMMON;
+        }
+        else if (r <= Farm.RARE_CHANCE)
+        {
+            return Item.Rarity.RARE;
+        }
+        else if (r <= Farm.LEGENDARY_CHANCE)
+        {
+            return Item.Rarity.LEGENDARY;
+        }
+        else
+        {
+            return Item.Rarity.ANCIENT;
+        }
+    }
+
+    public int SetForgeLevelRandomly(){
+        return Random.Range(0, 4);
+    }
 
     public void SetCommon()
     {
         rarity = Rarity.COMMON;
-        sellingCost = defaultCost * COMMON_COST_MULTIPLIER;
+        sellingCost = defaultCost * Farm.COMMON_COST_MULTIPLIER;
     }
 
     public void SetRare()
     {
         rarity = Rarity.RARE;
-        sellingCost = defaultCost * RARE_COST_MULTIPLIER;
+        sellingCost = defaultCost * Farm.RARE_COST_MULTIPLIER;
     }
 
     public void SetLegendray()
     {
         rarity = Rarity.LEGENDARY;
-        sellingCost = defaultCost * LEGENDARY_COST_MULTIPLIER;
+        sellingCost = defaultCost * Farm.LEGENDARY_COST_MULTIPLIER;
     }
 
     public void SetAncient()
     {
         rarity = Rarity.ANCIENT;
-        sellingCost = defaultCost * ANCIENT_COST_MULTIPLIER;
+        sellingCost = defaultCost * Farm.ANCIENT_COST_MULTIPLIER;
     }
 
     public void SetTextEN(string _name, string _desc)
@@ -182,6 +196,20 @@ public class Item : ScriptableObject
         {
             return Localizer.GetENRarity(this);
         }
+    }
+
+    public string GetNameByForgeLevel()
+    {
+        var stb = new StringBuilder(GetNameNative());
+        stb.Append(" (+");
+        stb.Append(forgeLevel);
+        stb.Append(")");
+        return stb.ToString();
+    }
+
+    public int GetCurrentPriceByForgeLevel()
+    {
+        return ForgeCalculator.GetCurrentPrice(forgeLevel, sellingCost);
     }
 
     #endregion
