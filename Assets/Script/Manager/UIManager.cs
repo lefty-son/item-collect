@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
+using System.Linq;
+using JetBrains.Annotations;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
 
-    public AnimationCurve curvez;
+    public AnimationCurve curvez, travelCurve;
+
 
     /* Under Panel */
     public Button b_Inventory, b_Growth, b_Travel, b_Reward, b_Settings;
@@ -40,8 +44,13 @@ public class UIManager : MonoBehaviour
         StartCoroutine(FadeOut());
     }
 
+    public void StartFadeToTravel(){
+        StartCoroutine(FadeToTravel());
+    }
+
     private IEnumerator FadeOut()
     {
+        i_Fading.color = new Color(0.7f, 0.7f, 0.7f, 1f);
         var t = 0f;
         i_Fading.gameObject.SetActive(true);
         while (t <= 2f)
@@ -51,7 +60,32 @@ public class UIManager : MonoBehaviour
             i_Fading.color = new Color(0.7f, 0.7f, 0.7f, curvez.Evaluate(2f - t));
         }
         i_Fading.gameObject.SetActive(false);
-        i_Fading.color = new Color(0.7f, 0.7f, 0.7f, 1f);
+    }
+
+    private IEnumerator FadeToTravel()
+    {
+        i_Fading.color = new Color(0.7f, 0.7f, 0.7f, 0f);
+        var t = 0f;
+        i_Fading.gameObject.SetActive(true);
+		while (t <= 1f)
+		{
+			t += Time.deltaTime;
+			yield return null;
+            i_Fading.color = new Color(0.7f, 0.7f, 0.7f, travelCurve.Evaluate(t / 1));
+		}
+
+        TravelManager.instance.ChangeSceneToTown();
+
+        yield return new WaitForSeconds(2f);
+
+        t = 0f;
+        while (t <= 1f)
+        {
+            t += Time.deltaTime;
+            yield return null;
+            i_Fading.color = new Color(0.7f, 0.7f, 0.7f, travelCurve.Evaluate(1f - t));
+        }
+        i_Fading.gameObject.SetActive(false);
     }
 
 
