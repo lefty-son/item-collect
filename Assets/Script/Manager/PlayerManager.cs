@@ -72,6 +72,9 @@ public class PlayerManager : MonoBehaviour {
         else {
             // New user
             PlayerPrefs.SetInt(COOKIE, 1);
+
+            CurrencyManager.instance.InitGold();
+
             PlayerPrefs.SetInt(TRADE_LEVEL, 0);
             PlayerPrefs.SetInt(BAG_SIZE_LEVEL, 0);
             PlayerPrefs.SetInt(LUCK_LEVEL, 0);

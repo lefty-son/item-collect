@@ -44,13 +44,14 @@ public class UIManager : MonoBehaviour
     {
         var t = 0f;
         i_Fading.gameObject.SetActive(true);
-        while (t <= 1.25f)
+        while (t <= 2f)
         {
             t += Time.deltaTime;
             yield return null;
-            i_Fading.color = new Color(0.7f, 0.7f, 0.7f, curvez.Evaluate(1.25f - t));
+            i_Fading.color = new Color(0.7f, 0.7f, 0.7f, curvez.Evaluate(2f - t));
         }
         i_Fading.gameObject.SetActive(false);
+        i_Fading.color = new Color(0.7f, 0.7f, 0.7f, 1f);
     }
 
 

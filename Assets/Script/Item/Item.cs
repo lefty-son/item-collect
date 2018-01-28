@@ -8,11 +8,7 @@ public class Item : ScriptableObject
 
     public string inventoryId;
     public string id;
-    public string enName, enDesc;
-    public string krName, krDesc;
-    public string cnName, cnDesc;
-    public string jpName, jpDesc;
-    public string cntName, cntDesc;
+    public string itemName;
     public int defaultCost;
     public int sellingCost;
     public enum Rarity { COMMON, RARE, LEGENDARY, ANCIENT }
@@ -74,36 +70,6 @@ public class Item : ScriptableObject
         sellingCost = defaultCost * Farm.ANCIENT_COST_MULTIPLIER;
     }
 
-    public void SetTextEN(string _name, string _desc)
-    {
-        enName = _name;
-        enDesc = _desc;
-    }
-
-    public void SetTextKR(string _name, string _desc)
-    {
-        krName = _name;
-        krDesc = _desc;
-    }
-
-    public void SetTextCN(string _name, string _desc)
-    {
-        cnName = _name;
-        cnDesc = _desc;
-    }
-
-    public void SetTextJP(string _name, string _desc)
-    {
-        jpName = _name;
-        jpDesc = _desc;
-    }
-
-    public void SetTextCNT(string _name, string _desc)
-    {
-        cntName = _name;
-        cntDesc = _desc;
-    }
-
     #endregion
 
 
@@ -116,58 +82,7 @@ public class Item : ScriptableObject
 
     public string GetNameNative()
     {
-        if (PlayerManager.instance.LANGUAGE == PlayerManager.DEVICE_LANGUAGE.EN)
-        {
-            return enName;
-        }
-        else if (PlayerManager.instance.LANGUAGE == PlayerManager.DEVICE_LANGUAGE.KR)
-        {
-            return krName;
-        }
-        else if (PlayerManager.instance.LANGUAGE == PlayerManager.DEVICE_LANGUAGE.JP)
-        {
-            return jpName;
-        }
-        else if (PlayerManager.instance.LANGUAGE == PlayerManager.DEVICE_LANGUAGE.CN)
-        {
-            return cnName;
-        }
-        else if (PlayerManager.instance.LANGUAGE == PlayerManager.DEVICE_LANGUAGE.CNT)
-        {
-            return cntName;
-        }
-        else
-        {
-            return enName;
-        }
-    }
-
-    public string GetDescNative()
-    {
-        if (PlayerManager.instance.LANGUAGE == PlayerManager.DEVICE_LANGUAGE.EN)
-        {
-            return enDesc;
-        }
-        else if (PlayerManager.instance.LANGUAGE == PlayerManager.DEVICE_LANGUAGE.KR)
-        {
-            return krDesc;
-        }
-        else if (PlayerManager.instance.LANGUAGE == PlayerManager.DEVICE_LANGUAGE.JP)
-        {
-            return jpDesc;
-        }
-        else if (PlayerManager.instance.LANGUAGE == PlayerManager.DEVICE_LANGUAGE.CN)
-        {
-            return cnDesc;
-        }
-        else if (PlayerManager.instance.LANGUAGE == PlayerManager.DEVICE_LANGUAGE.CNT)
-        {
-            return cntDesc;
-        }
-        else
-        {
-            return enDesc;
-        }
+        return itemName;
     }
 
     public string GetRarityNative()

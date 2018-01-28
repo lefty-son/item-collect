@@ -5,10 +5,6 @@ using UnityEngine;
 public class Localizer : MonoBehaviour {
     public static Localizer instance;
 
-    private readonly string item001 = "item001";
-	private readonly string item002 = "item003";
-    private readonly string item003 = "item002";
-
 
     #region RARITY STATIC TRANSLATE
 
@@ -39,21 +35,122 @@ public class Localizer : MonoBehaviour {
 
     #endregion
 
+    #region UI KEY
 
+    private readonly string t_ATown_key = "t_ATown_key";
+    private readonly string t_BTown_key = "t_BTown_key";
+    private readonly string t_CTown_key = "t_CTown_key";
+
+    private readonly string t_Cancel_key = "t_Cancel_key";
+    private readonly string t_Confirm_key = "t_Confirm_key";
+    private readonly string t_Farming_key = "t_Farming_key";
+    private readonly string t_ForgingItem_key = "t_ForgingItem_key";
+    private readonly string t_ItemFound_key = "t_ItemFound_key";
+    private readonly string t_ForgeNow_key = "t_ForgeNow_key";
+    private readonly string t_Probability_Holder_key = "t_Probability_Holder_key";
+    private readonly string t_ForgeSuccess_key = "t_ForgeSuccess_key";
+    private readonly string t_SellingPrice_key = "t_SellingPrice_key";
+
+
+    #endregion
+
+    // Dictionary
     private Dictionary<string, string> dict;
 
     private void Awake()
     {
         if (instance == null) instance = this;
         dict = new Dictionary<string, string>();
-        FillDictionary();
+
+        if (PlayerManager.instance.LANGUAGE == PlayerManager.DEVICE_LANGUAGE.EN)
+        {
+            FillDictionaryEN();
+        }
+        else if (PlayerManager.instance.LANGUAGE == PlayerManager.DEVICE_LANGUAGE.KR)
+        {
+            FillDictionaryKR();
+        }
+        else if (PlayerManager.instance.LANGUAGE == PlayerManager.DEVICE_LANGUAGE.JP)
+        {
+            FillDictionaryJP();
+        }
+        else if (PlayerManager.instance.LANGUAGE == PlayerManager.DEVICE_LANGUAGE.CN)
+        {
+            FillDictionaryCN();
+        }
+        else if (PlayerManager.instance.LANGUAGE == PlayerManager.DEVICE_LANGUAGE.CNT)
+        {
+            FillDictionaryCNT();
+        }
+        else
+        {
+            FillDictionaryEN();
+        }
     }
 
-    private void FillDictionary(){
-        dict.Add(item001, "Sword");
-        dict.Add(item002, "Knife");
-        dict.Add(item003, "Dagger");
+    #region EN
+    private void FillDictionaryEN(){
+
     }
+    #endregion
+
+
+    #region KR
+    private void FillDictionaryKR()
+    {
+        dict.Add(t_ATown_key, "A 마을 시세");
+        dict.Add(t_BTown_key, "B 마을 시세");
+        dict.Add(t_CTown_key, "C 마을 시세");
+        dict.Add(t_Cancel_key, "취소하기");
+        dict.Add(t_Confirm_key  , "확인");
+        dict.Add(t_Farming_key, "아이템 파밍 중");
+        dict.Add(t_ForgingItem_key, "아이템 강화");
+        dict.Add(t_ItemFound_key, "아이템 발견!");
+        dict.Add(t_ForgeNow_key, "강화하기");
+        dict.Add(t_Probability_Holder_key, "성공 확률");
+        dict.Add(t_ForgeSuccess_key, "강화 성공!");
+        dict.Add(t_SellingPrice_key, "판매 가격");
+
+        /* dict interface
+        dict.Add(t_ATown_key, "");
+        dict.Add(t_BTown_key, "");
+        dict.Add(t_CTown_key, "");
+        dict.Add(t_Cancel_key, "");
+        dict.Add(t_Confirm_key, "");
+        dict.Add(t_Farming_key, "");
+        dict.Add(t_ForgingItem_key, "");
+        dict.Add(t_ItemFound_key, "");
+        dict.Add(t_ForgeNow_key, "");
+        dict.Add(t_Probability_Holder_key, "");
+        dict.Add(t_ForgeSuccess_key, "");
+        dict.Add(t_SellingPrice_key, "");
+        */
+    }
+    #endregion
+
+
+    #region JP
+    private void FillDictionaryJP()
+    {
+
+    }
+    #endregion
+
+
+    #region CN
+    private void FillDictionaryCN()
+    {
+
+    }
+    #endregion
+
+
+    #region CNT
+    private void FillDictionaryCNT()
+    {
+
+    }
+    #endregion
 
     public string GetTextFromLocal(string _key)
     {

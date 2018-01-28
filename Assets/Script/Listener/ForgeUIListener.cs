@@ -30,11 +30,17 @@ public class ForgeUIListener : MonoBehaviour {
         b_Cancel.interactable = true;
         isForgeQueued = false;
         isForgeDone = false;
+
+
     }
 
     public void GetForgeItemFromSlot(GameItem item, Sprite outer, Sprite inner, Color color){
-        
         forgeItem = item;
+
+        // Check affordable
+        var isAffordable = CurrencyManager.instance.CheckGoldAffordable(item.GetForgeCostByForgeLevel());
+        b_ForgeIt.interactable = isAffordable;
+
         i_Outer.sprite = outer;
         i_Inner.sprite = inner;
         i_ItemSprite.sprite = item.sprite;
@@ -43,15 +49,20 @@ public class ForgeUIListener : MonoBehaviour {
         t_CurrentPrice.text = item.GetCurrentPriceByForgeLevel().ToString();
         t_NextPrice.text = item.GetNextPriceByForgeLevel().ToString();
 
+        // Set forge cost
         var forgePriceStb = new StringBuilder("-");
         forgePriceStb.Append(item.GetForgeCostByForgeLevel());
         t_ForgePrice.text = forgePriceStb.ToString();
 
+
+
+        // Set interval price
         var intervalPriceStb = new StringBuilder("(+");
         intervalPriceStb.Append((item.GetNextPriceByForgeLevel() - item.GetCurrentPriceByForgeLevel()));
         intervalPriceStb.Append(")");
 		t_IntervalPrice.text = intervalPriceStb.ToString();
 
+        // Set probabality
         var forgeProbStb = new StringBuilder(ForgeCalculator.GetProbability(item.forgeLevel).ToString());
         forgeProbStb.Append("%");
         t_ForgeProbability.text = forgeProbStb.ToString();
@@ -70,7 +81,12 @@ public class ForgeUIListener : MonoBehaviour {
         }
     }
 
+
+#region FORGE INTERACTION
+
     private void ShowForgeResult(int prob){
+        
+        CurrencyManager.instance.MinusGoldByValue(forgeItem.GetForgeCostByForgeLevel());
         var r = Random.Range(1, 100);
         UIManager.instance.StartFadeOut();
         p_OnResult.SetActive(true);
@@ -80,18 +96,26 @@ public class ForgeUIListener : MonoBehaviour {
         }
         else {
             OnResultUIListener.instance.GetItemInfoOnFail(forgeItem);
+
+            // Remove item
+            Inventory.instance.DeleteItem(forgeItem);
         }
         InventoryUIListener.instance.NotifyToSlots();
         gameObject.SetActive(false);
     }
 
+    // FORGE
     public void ForgeIt(){
         b_Cancel.interactable = false;
+        b_ForgeIt.interactable = false;
         isForgeQueued = true;
         isForgeDone = false;
     }
 
-	private void OnDisable()
+#endregion
+
+
+    private void OnDisable()
 	{
 		forgeItem = null;
 	}
