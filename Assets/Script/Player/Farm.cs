@@ -238,7 +238,6 @@ public class Farm : MonoBehaviour
 
     public void NameAssetsKR()
     {
-        Debug.Log("We");
         string filePath1 = Path.Combine(Application.streamingAssetsPath, "kr01.json");
         string filePath2 = Path.Combine(Application.streamingAssetsPath, "kr02.json");
         string filePath3 = Path.Combine(Application.streamingAssetsPath, "kr03.json");
@@ -247,7 +246,6 @@ public class Farm : MonoBehaviour
 
         if (File.Exists(filePath1) && File.Exists(filePath2) && File.Exists(filePath3) && File.Exists(filePath4) && File.Exists(filePath5))
         {
-            Debug.Log("Are");
             string dataAsJson1 = File.ReadAllText(filePath1);
             string dataAsJson2 = File.ReadAllText(filePath2);
             string dataAsJson3 = File.ReadAllText(filePath3);

@@ -114,17 +114,22 @@ public class Inventory : MonoBehaviour {
         return count;
     }
 
-    //public GameItem GetLastItem(){
-        
-    //    for (int i = 0; i < inventory.Count;i++){
-    //        if(!inventory[i].isAllocated){
-    //            return inventory[i - 1];
-    //        }
-    //    }
-    //    return inventory[inventory.Count - 1];
-    //}
+    public int GetTariff(){
+        var sum = 0f;
+        foreach(var item in inventory){
+            sum += item.GetCurrentPriceByForgeLevel() * 0.05f;
+        }
+        return (int)sum;
+    }
 
-
+    public int GetMaintain(){
+        var sum = 0f;
+        foreach (var item in inventory)
+        {
+            sum += item.GetMaintainValue();
+        }
+        return (int)sum;
+    }
 
 }
 
@@ -210,9 +215,9 @@ public class GameItem
         sprite = item.sprite;
 
 		forgeLevel = item.forgeLevel;
-        firstMarketPrice = UnityEngine.Random.Range(-50f, 50f);
-        secondMarketPrice = UnityEngine.Random.Range(-50f, 50f);
-        thirdMarketPrice = UnityEngine.Random.Range(-50f, 50f);
+        firstMarketPrice = UnityEngine.Random.Range(0.5f, 1.5f);
+        secondMarketPrice = UnityEngine.Random.Range(0.5f, 1.5f);
+        thirdMarketPrice = UnityEngine.Random.Range(0.5f, 1.5f);
     }
 
 
@@ -238,6 +243,29 @@ public class GameItem
     //        return Item.Rarity.ANCIENT;
     //    }
     //}
+
+    public int GetFirstMarketPriceValue(){
+        // TODO: adjust price by Verbal Level;
+        var p = GetCurrentPriceByForgeLevel() * firstMarketPrice;
+        return (int)p;
+    }
+    public int GetSecondMarketPriceValue()
+    {
+        // TODO: adjust price by Verbal Level;
+        var p = GetCurrentPriceByForgeLevel() * secondMarketPrice;
+        return (int)p;
+    }
+    public int GetThirdMarketPriceValue()
+    {
+        // TODO: adjust price by Verbal Level;
+        var p = GetCurrentPriceByForgeLevel() * thirdMarketPrice;
+        return (int)p;
+    }
+
+    public int GetMaintainValue(){
+        var p =GetCurrentPriceByForgeLevel() * 0.1f;
+        return (int)p;
+    }
 
     public string GetNameByForgeLevel()
     {

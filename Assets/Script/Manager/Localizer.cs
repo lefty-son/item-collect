@@ -51,6 +51,20 @@ public class Localizer : MonoBehaviour {
     private readonly string t_ForgeSuccess_key = "t_ForgeSuccess_key";
     private readonly string t_SellingPrice_key = "t_SellingPrice_key";
 
+    private readonly string t_ATownName_key = "t_ATownName_key";
+    private readonly string t_BTownName_key = "t_BTownName_key";
+    private readonly string t_CTownName_key = "t_CTownName_key";
+    private readonly string t_CurrentLocation_key = "t_CurrentLocation_key";
+    private readonly string t_TownFee_key = "t_TownFee_key";
+
+    private readonly string t_AffordableWarn_key = "t_AffordableWarn_key";
+
+    private readonly string t_TownName_key = "t_TownName_key";
+    private readonly string t_MarketPrice_key = "t_MarketPrice_key";
+    private readonly string t_Maintain_key = "t_Maintain_key";
+    private readonly string t_SuggestedPrice_key = "t_SuggestedPrice_key";
+
+    private readonly string t_SellingItem = "t_SellingItem";
 
     #endregion
 
@@ -110,6 +124,17 @@ public class Localizer : MonoBehaviour {
         dict.Add(t_Probability_Holder_key, "성공 확률");
         dict.Add(t_ForgeSuccess_key, "강화 성공!");
         dict.Add(t_SellingPrice_key, "판매 가격");
+        dict.Add(t_ATownName_key, "엘림 마을");
+        dict.Add(t_BTownName_key, "로만 마을");
+        dict.Add(t_CTownName_key, "베니스 마을");
+        dict.Add(t_CurrentLocation_key, "현재 위치");
+        dict.Add(t_TownFee_key, "이동 비용");
+        dict.Add(t_AffordableWarn_key, "골드가 부족합니다!");
+        dict.Add(t_TownName_key, "마을");
+        dict.Add(t_MarketPrice_key, "시세");
+        dict.Add(t_Maintain_key, "유지비");
+		dict.Add(t_SuggestedPrice_key, "제시한 가격");
+        dict.Add(t_SellingItem, "거래");
 
         /* dict interface
         dict.Add(t_ATown_key, "");
@@ -124,6 +149,17 @@ public class Localizer : MonoBehaviour {
         dict.Add(t_Probability_Holder_key, "");
         dict.Add(t_ForgeSuccess_key, "");
         dict.Add(t_SellingPrice_key, "");
+        dict.Add(t_ATownName_key, "");
+        dict.Add(t_BTownName_key, "");
+        dict.Add(t_CTownName_key, "");
+        dict.Add(t_CurrentLocation_key, "");
+        dict.Add(t_TownFee_key, "");
+        dict.Add(t_AffordableWarn_key, "");
+        dict.Add(t_TownName_key, "");
+        dict.Add(t_MarketPrice_key, "");
+        dict.Add(t_Maintain_key, "");
+        dict.Add(t_SuggestedPrice_key, "");
+        dict.Add(t_SellingItem, "");
         */
     }
     #endregion
@@ -155,6 +191,18 @@ public class Localizer : MonoBehaviour {
     public string GetTextFromLocal(string _key)
     {
         return dict[_key];
+    }
+
+    public string GetTownName(){
+        if(PlayerManager.instance.GetCurrentLocation() == 0){
+            return dict[t_ATownName_key];
+        }
+        else if(PlayerManager.instance.GetCurrentLocation() == 1){
+            return dict[t_BTownName_key];
+        }
+        else {
+            return dict[t_CTownName_key];
+        }
     }
 
     public static string GetENRarity(Item item){

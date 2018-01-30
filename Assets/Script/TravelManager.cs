@@ -1,53 +1,37 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+
 
 public class TravelManager : MonoBehaviour {
     public static TravelManager instance;
-
-    public enum TOWN {
-        A, B, C, FIELD
-    }
-
-    public TOWN town;
 
     private void Awake()
     {
         if (instance == null) instance = this;
     }
 
-    public void ChangeSceneToTown(){
-        //if(town == TOWN.A){
-            
-        //}
-        //else if(town == TOWN.B){
-            
-        //}
-        //else if(town == TOWN.C){
-            
-        //}
-        //else {
-            
-        //}
-        SceneManager.LoadScene("Town");
-    }
-
     public void MoveToA()
     {
-        town = TOWN.A;
+        PlayerManager.instance.SetCurrentLocation(0);
+        var totalFee = (int)(Inventory.instance.GetTariff() * (1.00f - PlayerManager.instance.GetStatsTradeValue()));
+        CurrencyManager.instance.MinusGoldByValue(totalFee);
         UIManager.instance.StartFadeToTravel();
     }
 
     public void MoveToB()
     {
-        town = TOWN.B;
+        PlayerManager.instance.SetCurrentLocation(1);
+        var totalFee = (int)(Inventory.instance.GetTariff() * (1.00f - PlayerManager.instance.GetStatsTradeValue()));
+        CurrencyManager.instance.MinusGoldByValue(totalFee);
         UIManager.instance.StartFadeToTravel();
     }
 
     public void MoveToC()
     {
-        town = TOWN.C;
+        PlayerManager.instance.SetCurrentLocation(2);
+        var totalFee = (int)(Inventory.instance.GetTariff() * (1.00f - PlayerManager.instance.GetStatsTradeValue()));
+        CurrencyManager.instance.MinusGoldByValue(totalFee);
         UIManager.instance.StartFadeToTravel();
     }
 }

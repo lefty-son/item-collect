@@ -12,10 +12,11 @@ public class SlotUIListener : MonoBehaviour {
     public Sprite sp_LegendaryOuter, sp_LegendaryInner;
     public Sprite sp_AncientOuter, sp_AncientInner;
     public Image i_Coin;
-    public Text t_ItemName, t_Rarity, t_SellingCost;
+    public Text t_ItemName, t_Rarity, t_Damaged, t_Maintain;
     public Text t_AMarketPrice, t_BMarketPrice, t_CMarketPrice;
+    public Text t_ATown, t_BTown, t_CTown;
 
-    public Button b_Forge, b_Drop;
+    public Button b_Forge, b_Drop, b_Sell;
 
     [SerializeField ]private GameItem thisItem;
 
@@ -24,6 +25,7 @@ public class SlotUIListener : MonoBehaviour {
         thisImage = GetComponent<Image>();
         b_Forge.onClick.AddListener(Forge);
         b_Drop.onClick.AddListener(Drop);
+        b_Sell.onClick.AddListener(Sell);
     }
 
     public void ActiveAllHolders(){
@@ -34,12 +36,18 @@ public class SlotUIListener : MonoBehaviour {
         i_SpriteInner.gameObject.SetActive(true);
         t_ItemName.gameObject.SetActive(true);
         t_Rarity.gameObject.SetActive(true);
-        t_SellingCost.gameObject.SetActive(true);
         b_Forge.gameObject.SetActive(true);
         b_Drop.gameObject.SetActive(true);
+        b_Sell.gameObject.SetActive(true);
         t_AMarketPrice.gameObject.SetActive(true);
         t_BMarketPrice.gameObject.SetActive(true);
         t_CMarketPrice.gameObject.SetActive(true);
+
+        t_Damaged.gameObject.SetActive(true);
+        t_Maintain.gameObject.SetActive(true);
+        t_ATown.gameObject.SetActive(true);
+        t_BTown.gameObject.SetActive(true);
+        t_CTown.gameObject.SetActive(true);
     }
 
     public void InactiveAllHolders(){
@@ -51,12 +59,18 @@ public class SlotUIListener : MonoBehaviour {
         i_SpriteInner.gameObject.SetActive(false);
         t_ItemName.gameObject.SetActive(false);
         t_Rarity.gameObject.SetActive(false);
-        t_SellingCost.gameObject.SetActive(false);
         b_Forge.gameObject.SetActive(false);
         b_Drop.gameObject.SetActive(false);
+        b_Sell.gameObject.SetActive(false);
         t_AMarketPrice.gameObject.SetActive(false);
         t_BMarketPrice.gameObject.SetActive(false);
         t_CMarketPrice.gameObject.SetActive(false);
+
+        t_Damaged.gameObject.SetActive(false);
+        t_Maintain.gameObject.SetActive(false);
+        t_ATown.gameObject.SetActive(false);
+        t_BTown.gameObject.SetActive(false);
+        t_CTown.gameObject.SetActive(false);
     }
 
 
@@ -98,15 +112,26 @@ public class SlotUIListener : MonoBehaviour {
 
             t_ItemName.text = item.GetNameByForgeLevel();
             t_Rarity.text = item.rarityNative;
-            t_SellingCost.text = item.GetCurrentPriceByForgeLevel().ToString();
+            //t_SellingCost.text = item.GetCurrentPriceByForgeLevel().ToString();
             i_SpriteItem.sprite = item.sprite;
 
-            t_AMarketPrice.text = GetFormattedMarketPrice(item.firstMarketPrice);
-            t_AMarketPrice.color = GetMarketPriceColor(item.firstMarketPrice);
-            t_BMarketPrice.text = GetFormattedMarketPrice(item.secondMarketPrice);
-            t_BMarketPrice.color = GetMarketPriceColor(item.secondMarketPrice);
-            t_CMarketPrice.text = GetFormattedMarketPrice(item.thirdMarketPrice);
-            t_CMarketPrice.color = GetMarketPriceColor(item.thirdMarketPrice);
+            // Raw price only
+            t_AMarketPrice.text = item.GetFirstMarketPriceValue().ToString();
+            t_BMarketPrice.text = item.GetSecondMarketPriceValue().ToString();
+            t_CMarketPrice.text = item.GetThirdMarketPriceValue().ToString();
+
+            var maintainStb = new StringBuilder(Localizer.instance.GetTextFromLocal("t_Maintain_key"));
+            maintainStb.Append(": ");
+            maintainStb.Append(item.GetMaintainValue());
+            t_Maintain.text = maintainStb.ToString();
+
+            //t_AMarketPrice.text = GetFormattedMarketPrice(item.GetFirstMarketPriceValue());
+            //t_BMarketPrice.text = GetFormattedMarketPrice(item.GetSecondMarketPriceValue());
+            //t_CMarketPrice.text = GetFormattedMarketPrice(item.GetThirdMarketPriceValue());
+            //t_AMarketPrice.color = GetMarketPriceColor(item.firstMarketPrice);
+            //t_BMarketPrice.color = GetMarketPriceColor(item.secondMarketPrice);
+            //t_CMarketPrice.color = GetMarketPriceColor(item.thirdMarketPrice);
+            Debug.Log(Inventory.instance.GetMaintain());
         }
         else {
             
@@ -129,6 +154,11 @@ public class SlotUIListener : MonoBehaviour {
     private void Drop(){
         Inventory.instance.DeleteItem(thisItem);
     }
+
+    private void Sell(){
+        Debug.LogFormat("selling  {0} {1} {2}", thisItem.GetNameByForgeLevel(), thisItem.GetSecondMarketPriceValue(), thisItem.GetCurrentPriceByForgeLevel() );
+    }
+     
 
     public string GetFormattedMarketPrice(float prob){
         string mark;

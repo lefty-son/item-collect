@@ -28,6 +28,8 @@ public class PlayerManager : MonoBehaviour {
     private readonly string BAG_SIZE_LEVEL = "32510ca559c0ecdffe8438199b20c85a";
     private readonly string LUCK_LEVEL = "01de7201c286a45d623e47cf81a20c6c";
 
+    private readonly string LOCATION = "71233d73cc90bba8f4d5bbea0792e551";
+
     #endregion
 
 
@@ -78,6 +80,7 @@ public class PlayerManager : MonoBehaviour {
             PlayerPrefs.SetInt(TRADE_LEVEL, 0);
             PlayerPrefs.SetInt(BAG_SIZE_LEVEL, 0);
             PlayerPrefs.SetInt(LUCK_LEVEL, 0);
+            PlayerPrefs.SetInt(LOCATION, 0);
         }
     }
 
@@ -93,21 +96,23 @@ public class PlayerManager : MonoBehaviour {
     public int GetStatsLuckLevel(){
         return PlayerPrefs.GetInt(LUCK_LEVEL);
     }
-
     public float GetStatsTradeValue(){
-        return 1f;
+        var level = GetStatsTradeLevel();
+        float trade = 1f - (100f / (float)(100 + level)) * 50f + 50;
+        return trade * 0.01f;
     }
-    // Bag size level + default size of bag
-    public int GetStatsBagSizeValue()
-    {
+    public int GetStatsBagSizeValue(){
         return GetStatsBagSizeLevel() + DEFAULT_BAG_SIZE;
     }
-    public float GetStatsLuckValue()
-    {
+    public float GetStatsLuckValue(){
         var level = GetStatsLuckLevel();
         float luck = 1f - (100f / (float)(100 + level)) * 50f + 50;
         return  luck;
     }
+    public int GetCurrentLocation(){
+        return PlayerPrefs.GetInt(LOCATION);
+    }
+
 
     #endregion
 
@@ -122,6 +127,10 @@ public class PlayerManager : MonoBehaviour {
 	}
     public void SetStatsLuckLevelUp(){
         PlayerPrefs.SetInt(LUCK_LEVEL, GetStatsLuckLevel() + 1);
+    }
+    public void SetCurrentLocation(int value){
+        PlayerPrefs.SetInt(LOCATION, value);
+		FindObjectOfType<TextCurrentLocationHolder>().OnEnable();
     }
 
     #endregion
