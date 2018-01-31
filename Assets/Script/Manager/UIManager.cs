@@ -33,6 +33,10 @@ public class UIManager : MonoBehaviour
     public GameObject p_Forge;
     /* ----------- */
 
+    /* Sell Panel */
+    public GameObject p_Sell;
+    /* ---------- */
+
     public Image i_Fading;
 
     private void Awake()
@@ -288,6 +292,20 @@ public class UIManager : MonoBehaviour
     }
 
     #endregion
+
+
+    #region Sell
+
+    public void OnSell(){
+        p_Sell.SetActive(true);
+    }
+
+    public void OffSell(){
+        p_Sell.SetActive(false);
+    }
+
+    #endregion
+
 
 
     #region Forge

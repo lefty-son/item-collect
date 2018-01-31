@@ -157,6 +157,9 @@ public class SlotUIListener : MonoBehaviour {
 
     private void Sell(){
         Debug.LogFormat("selling  {0} {1} {2}", thisItem.GetNameByForgeLevel(), thisItem.GetSecondMarketPriceValue(), thisItem.GetCurrentPriceByForgeLevel() );
+        UIManager.instance.OnSell();
+        SellingUIListener.instance.GetItemInfoToSell(thisItem, i_SpriteOuter.sprite, i_SpriteInner.sprite);
+        SellingUIListener.instance.Negotiate();
     }
      
 

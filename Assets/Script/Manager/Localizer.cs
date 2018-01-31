@@ -64,7 +64,17 @@ public class Localizer : MonoBehaviour {
     private readonly string t_Maintain_key = "t_Maintain_key";
     private readonly string t_SuggestedPrice_key = "t_SuggestedPrice_key";
 
-    private readonly string t_SellingItem = "t_SellingItem";
+    private readonly string t_SellingItem_key = "t_SellingItem_key";
+    private readonly string t_Leave_key = "t_Leave_key";
+    private readonly string t_Disagree_key = "t_Disagree_key";
+    private readonly string t_Sell_key = "t_Sell_key";
+
+    private readonly string t_Inventory_key = "t_Inventory_key";
+    private readonly string t_Growth_key = "t_Growth_key";
+    private readonly string t_Travel_key = "t_Travel_key";
+    private readonly string t_Reward_key = "t_Reward_key";
+    private readonly string t_Settings_key = "t_Settings_key";
+
 
     #endregion
 
@@ -134,8 +144,15 @@ public class Localizer : MonoBehaviour {
         dict.Add(t_MarketPrice_key, "시세");
         dict.Add(t_Maintain_key, "유지비");
 		dict.Add(t_SuggestedPrice_key, "제시한 가격");
-        dict.Add(t_SellingItem, "거래");
-
+        dict.Add(t_SellingItem_key, "거래");
+        dict.Add(t_Leave_key, "떠나기");
+        dict.Add(t_Disagree_key, "거절하기");
+        dict.Add(t_Sell_key, "팔기");
+        dict.Add(t_Inventory_key, "가방");
+        dict.Add(t_Growth_key, "성장");
+        dict.Add(t_Travel_key, "이동");
+        dict.Add(t_Reward_key, "보상");
+        dict.Add(t_Settings_key, "설정");
         /* dict interface
         dict.Add(t_ATown_key, "");
         dict.Add(t_BTown_key, "");
@@ -159,7 +176,15 @@ public class Localizer : MonoBehaviour {
         dict.Add(t_MarketPrice_key, "");
         dict.Add(t_Maintain_key, "");
         dict.Add(t_SuggestedPrice_key, "");
-        dict.Add(t_SellingItem, "");
+        dict.Add(t_SellingItem_key, "");
+        dict.Add(t_Leave_key, "");
+        dict.Add(t_Disagree_key, "");
+        dict.Add(t_Sell_key, "");
+        dict.Add(t_Inventory_key, "");
+        dict.Add(t_Growth_key, "");
+        dict.Add(t_Travel_key, "");
+        dict.Add(t_Reward_key, "");
+        dict.Add(t_Settings_key, "");
         */
     }
     #endregion
