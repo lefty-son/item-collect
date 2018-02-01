@@ -75,6 +75,18 @@ public class Localizer : MonoBehaviour {
     private readonly string t_Reward_key = "t_Reward_key";
     private readonly string t_Settings_key = "t_Settings_key";
 
+    private readonly string t_TradeName_key = "t_TradeName_key";
+    private readonly string t_PersuasionName_key = "t_PersuasionName_key";
+    private readonly string t_LuckName_key = "t_LuckName_key";
+
+    private readonly string t_TradeDesc1_key = "t_TradeDesc1_key";
+    private readonly string t_TradeDesc2_key = "t_TradeDesc2_key";
+    private readonly string t_PersuasionDesc1_key = "t_PersuasionDesc1_key";
+    private readonly string t_PersuasionDesc2_key = "t_PersuasionDesc2_key";
+    private readonly string t_LuckDesc1_key = "t_LuckDesc1_key";
+    private readonly string t_LuckDesc2_key = "t_LuckDesc2_key";
+
+    private readonly string t_Level_key = "t_Level_key";
 
     #endregion
 
@@ -153,6 +165,16 @@ public class Localizer : MonoBehaviour {
         dict.Add(t_Travel_key, "이동");
         dict.Add(t_Reward_key, "보상");
         dict.Add(t_Settings_key, "설정");
+        dict.Add(t_TradeName_key, "교역");
+        dict.Add(t_PersuasionName_key, "말재주");
+        dict.Add(t_LuckName_key, "행운");
+        dict.Add(t_Level_key, "레벨: ");
+        dict.Add(t_TradeDesc1_key,"아이템 유지비 감소: ");
+        dict.Add(t_TradeDesc2_key,"마을 이동 비용 감소: ");
+        dict.Add(t_PersuasionDesc1_key,"아이템 판매 가격 상승: ");
+        dict.Add(t_PersuasionDesc2_key,"고객이 거래를 떠날 확률 감소: ");
+        dict.Add(t_LuckDesc1_key,"아이템 추가 발견 확률 증가: ");
+        dict.Add(t_LuckDesc2_key,"보물 상자 발견 확률 증가: ");
         /* dict interface
         dict.Add(t_ATown_key, "");
         dict.Add(t_BTown_key, "");
@@ -185,6 +207,16 @@ public class Localizer : MonoBehaviour {
         dict.Add(t_Travel_key, "");
         dict.Add(t_Reward_key, "");
         dict.Add(t_Settings_key, "");
+        dict.Add(t_TradeName_key, "");
+        dict.Add(t_PersuasionName_key, "");
+        dict.Add(t_LuckName_key, "");
+        dict.Add(t_Level_key, "");
+        dict.Add(t_TradeDesc1_key,"");
+        dict.Add(t_TradeDesc2_key,"");
+        dict.Add(t_PersuasionDesc1_key,"");
+        dict.Add(t_PersuasionDesc2_key,"");
+        dict.Add(t_LuckDesc1_key,"");
+        dict.Add(t_LuckDesc2_key,"");
         */
     }
     #endregion

@@ -25,6 +25,27 @@ public class PlayerManager : MonoBehaviour {
 
     private readonly string LOCATION = "71233d73cc90bba8f4d5bbea0792e551";
 
+    public readonly string DAILY_1 = "c5f5aa9b2a49a6f88e06b84317af44ce";
+    public readonly string DAILY_2 = "b5d073613d9531900c9bfadb9a6888c4";
+    public readonly string DAILY_3 = "40c36dd877f80c51c046fca0a66daf1d";
+    public readonly string DAILY_4 = "b56c7de3029ef6e7bef4fb45f824fc48";
+    public readonly string DAILY_5 = "15eba0b09a52195bd91822897c777cea";
+
+    public readonly string QUEST_1 = "b2009607b109d21e0c8f0339c734b24a";
+    public readonly string QUEST_2 = "124e117b130b12c1b4d92b9c1a8ca2d5";
+    public readonly string QUEST_3 = "fea7a5cf8ed75e68e6deba27abf26018";
+    public readonly string QUEST_4 = "9b0d09c29566b72cf28d70870f8c559f";
+    public readonly string QUEST_5 = "5d7dcfd35ec264b47918b905853b1830";
+    public readonly string QUEST_6 = "c2f098a2bd1264cc2ce7741cfb002f8d";
+    public readonly string QUEST_7 = "1496d77eec1647d5d3a8da7257451fb3";
+    public readonly string QUEST_8 = "f3cae0f638d13ba16ec545f54fec12c3";
+    public readonly string QUEST_9 = "f99eadfd930b7235ca6cc72565cd0541";
+    public readonly string QUEST_10 = "6289d92454425becca4fbf10daad417c";
+
+    public readonly string AD_1 = "8da8d962c04126a69aa4393d5430e712";
+    public readonly string AD_2 = "91326443003ae89c26d7a864322c20eb";
+    public readonly string AD_3 = "e319e0972382cd525d9f7b340e7cd8e8";
+
     #endregion
 
 
@@ -77,6 +98,20 @@ public class PlayerManager : MonoBehaviour {
             PlayerPrefs.SetInt(BAG_SIZE_LEVEL, 0);
             PlayerPrefs.SetInt(LUCK_LEVEL, 0);
             PlayerPrefs.SetInt(LOCATION, 0);
+
+            PlayerPrefs.SetInt(QUEST_1, 0);
+            PlayerPrefs.SetInt(QUEST_2, 0);
+            PlayerPrefs.SetInt(QUEST_3, 0);
+            PlayerPrefs.SetInt(QUEST_4, 0);
+            PlayerPrefs.SetInt(QUEST_5, 0);
+            PlayerPrefs.SetInt(QUEST_6, 0);
+            PlayerPrefs.SetInt(QUEST_7, 0);
+            PlayerPrefs.SetInt(QUEST_8, 0);
+            PlayerPrefs.SetInt(QUEST_9, 0);
+            PlayerPrefs.SetInt(QUEST_10, 0);
+            PlayerPrefs.SetInt(AD_1, 0);
+            PlayerPrefs.SetInt(AD_2, 0);
+            PlayerPrefs.SetInt(AD_3, 0);
         }
     }
 
@@ -129,7 +164,7 @@ public class PlayerManager : MonoBehaviour {
         PlayerPrefs.SetInt(TRADE_LEVEL, GetStatsTradeLevel() + 1);
 	}
     public void SetStatsPersuasionLevelUp(){
-        PlayerPrefs.SetInt(TRADE_LEVEL, GetStatsPersuasionLevel() + 1);
+        PlayerPrefs.SetInt(PERSUASION_LEVEL, GetStatsPersuasionLevel() + 1);
     }
     public void SetStatsBagSizeLevelUp(){
         PlayerPrefs.SetInt(BAG_SIZE_LEVEL, GetStatsBagSizeLevel() + 1);
