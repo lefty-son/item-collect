@@ -84,18 +84,27 @@ public class DiscoverUIListener : MonoBehaviour {
                 t_ItemName[i].color = ItemColorDefine.RARE_TEXT_COLOR;
                 i_SpriteOuter[i].sprite = sp_RareOuter;
                 i_SpriteInner[i].sprite = sp_RareInner;
+
+                // ACHIEVEMENT
+                PlayerManager.instance.PlusItemCountRare();
             }
             else if (items[i].rarity == Item.Rarity.LEGENDARY)
             {
                 t_ItemName[i].color = ItemColorDefine.LGD_TEXT_COLOR;
                 i_SpriteOuter[i].sprite = sp_LegendaryOuter;
                 i_SpriteInner[i].sprite = sp_LegendaryInner;
+
+                // ACHIEVEMENT
+                PlayerManager.instance.PlusItemCountLegendary();
             }
             else
             {
                 t_ItemName[i].color = ItemColorDefine.ANCIENT_TEXT_COLOR;
                 i_SpriteOuter[i].sprite = sp_AncientOuter;
                 i_SpriteInner[i].sprite = sp_AncientInner;
+
+                // ACHIEVEMENT
+                PlayerManager.instance.PlusItemCountAncient();
             }
 
             // Set BGGradient color as highest rarity

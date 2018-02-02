@@ -88,6 +88,9 @@ public class Localizer : MonoBehaviour {
 
     private readonly string t_Level_key = "t_Level_key";
 
+    private readonly string t_DailyReward_key = "";
+    // TODO:
+
     #endregion
 
     // Dictionary

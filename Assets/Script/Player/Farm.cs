@@ -121,6 +121,12 @@ public class Farm : MonoBehaviour
 
     public void Roll()
     {
+        if(PlayerManager.instance.GetNotification() >= 1){
+            UIManager.instance.OnNotification();
+        }
+        else {
+            UIManager.instance.OffNotification();
+        }
         // Basic roll
 
         for (int i = 0; i < 1; i++)

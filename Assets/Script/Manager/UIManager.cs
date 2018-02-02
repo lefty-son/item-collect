@@ -22,6 +22,7 @@ public class UIManager : MonoBehaviour
     public Animation a_Inventory, a_Growth, a_Travel, a_Reward, a_Settings;
     public Button b_Inventory, b_Growth, b_Travel, b_Reward, b_Settings;
     public GameObject p_Inventory, p_Growth, p_Travel, p_Reward, p_Settings;
+    public GameObject p_Notification;
     /* ----------- */
 
     /* Farm Panel */
@@ -54,6 +55,15 @@ public class UIManager : MonoBehaviour
 
     public void StartFadeOut(){
         StartCoroutine(FadeOut());
+    }
+
+    public void OnNotification(){
+        p_Notification.SetActive(true);
+    }
+
+    public void OffNotification()
+    {
+        p_Notification.SetActive(false);
     }
 
 	private IEnumerator FadeOut()

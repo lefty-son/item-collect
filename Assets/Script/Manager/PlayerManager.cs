@@ -9,13 +9,19 @@ public class PlayerManager : MonoBehaviour {
     {
         EN, KR, JP, CN, CNT
     }
+	public DEVICE_LANGUAGE LANGUAGE;
 
-    public DEVICE_LANGUAGE LANGUAGE;
-    private readonly int DEFAULT_BAG_SIZE   = 6;
+    #region CONST
+	private readonly int DEFAULT_BAG_SIZE   = 6;
+    private readonly int DAILY_1_ITEM_RARE_LIMIT = 3;
+    private readonly int DAILY_2_ITEM_LGD_LIMIT = 20;
+    private readonly int DAILY_3_ITEM_ANCIENT_LIMIT = 5;
+    private readonly int DAILY_4_FORGE_SUCCESS_LIMIT = 5;
+    private readonly int DAILY_5_FORGE_FAILED_LIMIT = 1;
+    #endregion
 
 
     #region KEY
-
     private readonly string COOKIE = "0b16b6d29f92bc32f417f14f2c16ea2a";
 
     private readonly string TRADE_LEVEL = "3a5373f7c1598b9e251273833f5bca21";
@@ -45,6 +51,15 @@ public class PlayerManager : MonoBehaviour {
     public readonly string AD_1 = "8da8d962c04126a69aa4393d5430e712";
     public readonly string AD_2 = "91326443003ae89c26d7a864322c20eb";
     public readonly string AD_3 = "e319e0972382cd525d9f7b340e7cd8e8";
+
+    private readonly string NOTIFICATION = "9814d942b7e24870084a3dce24867ab3";
+
+    /* DAILY */
+    private readonly string ITEM_COUNT_RARE = "09531d47c07325ce91a5fb40370f0a1f";
+    private readonly string ITEM_COUNT_LGD = "3f533f469948c7ffc85b70df6b37442b";
+    private readonly string ITEM_COUNT_ANCIENT = "7da45c5be732a77867749995e25a19d7";
+    private readonly string FORGE_SUCCESS_COUNT = "ba070632e13dee203ee70503f0532944";
+    private readonly string FORGE_FAILED_COUNT = "c2a1c3a77d2088fc8f8d22fc3352e351";
 
     #endregion
 
@@ -112,11 +127,20 @@ public class PlayerManager : MonoBehaviour {
             PlayerPrefs.SetInt(AD_1, 0);
             PlayerPrefs.SetInt(AD_2, 0);
             PlayerPrefs.SetInt(AD_3, 0);
+
+            PlayerPrefs.SetInt(NOTIFICATION, 0);
+
+            /* DAILY */
+            PlayerPrefs.SetInt(ITEM_COUNT_RARE, 0);
+            PlayerPrefs.SetInt(ITEM_COUNT_LGD, 0);
+            PlayerPrefs.SetInt(ITEM_COUNT_ANCIENT, 0);
+			PlayerPrefs.SetInt(FORGE_SUCCESS_COUNT, 0);
+            PlayerPrefs.SetInt(FORGE_FAILED_COUNT, 0);
         }
     }
 
 
-    #region GETTER
+    #region STATS GETTER
 
     public int GetStatsTradeLevel(){
         return PlayerPrefs.GetInt(TRADE_LEVEL);
@@ -154,12 +178,12 @@ public class PlayerManager : MonoBehaviour {
         return PlayerPrefs.GetInt(LOCATION);
     }
 
+    public int GetNotification(){
+        return PlayerPrefs.GetInt(NOTIFICATION);
+    }
     #endregion
 
-
-
-    #region SETTER
-
+    #region STATS SETTER
     public void SetStatsTradeLevelUp(){
         PlayerPrefs.SetInt(TRADE_LEVEL, GetStatsTradeLevel() + 1);
 	}
@@ -176,8 +200,337 @@ public class PlayerManager : MonoBehaviour {
         PlayerPrefs.SetInt(LOCATION, value);
 		FindObjectOfType<TextCurrentLocationHolder>().OnEnable();
     }
-
     #endregion
+
+
+    #region GET, PLUS REWARDS
+    public void PlusNotificationCount()
+    {
+        PlayerPrefs.SetInt(NOTIFICATION, GetNotification() + 1);
+        UIManager.instance.OnNotification();
+    }
+    public void MinusNotificationCount(){
+        PlayerPrefs.SetInt(NOTIFICATION, GetNotification() - 1);
+        if(GetNotification() <= 0){
+            UIManager.instance.OffNotification();
+        }
+    }
+    /* DAILY */
+    public int GetItemCountRare()
+    {
+        return PlayerPrefs.GetInt(ITEM_COUNT_RARE);
+    }
+    public int GetItemCountLegendary()
+    {
+        return PlayerPrefs.GetInt(ITEM_COUNT_LGD);
+    }
+    public int GetItemCountAncient()
+    {
+        return PlayerPrefs.GetInt(ITEM_COUNT_ANCIENT);
+    }
+    public int GetForgeSuccessCount()
+    {
+        return PlayerPrefs.GetInt(FORGE_SUCCESS_COUNT);
+    }
+    public int GetForgeFailedCount()
+    {
+        return PlayerPrefs.GetInt(FORGE_FAILED_COUNT);
+    }
+    public void PlusItemCountRare(){
+        PlayerPrefs.SetInt(ITEM_COUNT_RARE, GetItemCountRare() + 1);
+        if(GetItemCountRare() >= DAILY_1_ITEM_RARE_LIMIT && PlayerPrefs.GetInt(DAILY_1) == 0){
+            PlusNotificationCount();
+            SetReadyToGetDailyRewards(1);
+        }
+    }
+    public void PlusItemCountLegendary()
+    {
+        PlayerPrefs.SetInt(ITEM_COUNT_LGD, GetItemCountLegendary() + 1);
+        if(GetItemCountLegendary() >= DAILY_2_ITEM_LGD_LIMIT && PlayerPrefs.GetInt(DAILY_2) == 0){
+            PlusNotificationCount();
+            SetReadyToGetDailyRewards(2);
+        }
+    }
+    public void PlusItemCountAncient()
+    {
+        PlayerPrefs.SetInt(ITEM_COUNT_ANCIENT, GetItemCountAncient() + 1);
+        if(GetItemCountAncient() >= DAILY_3_ITEM_ANCIENT_LIMIT && PlayerPrefs.GetInt(DAILY_3) == 0){
+            PlusNotificationCount();
+            SetReadyToGetDailyRewards(3);
+        }
+    }
+    public void PlusForgeSuccessCount(){
+        PlayerPrefs.SetInt(FORGE_SUCCESS_COUNT, GetForgeSuccessCount() + 1);
+        if(GetForgeSuccessCount() >= DAILY_4_FORGE_SUCCESS_LIMIT && PlayerPrefs.GetInt(DAILY_4) == 0){
+            PlusNotificationCount();
+            SetReadyToGetDailyRewards(4);
+        }
+    }
+    public void PlusForgeFailedCount(){
+        PlayerPrefs.SetInt(FORGE_FAILED_COUNT, GetForgeFailedCount() + 1);
+        if(GetForgeFailedCount() >= DAILY_5_FORGE_FAILED_LIMIT && PlayerPrefs.GetInt(DAILY_5) == 0){
+            PlusNotificationCount();
+            SetReadyToGetDailyRewards(5);
+        }
+    }
+    #endregion
+
+    #region RECEIVE REWARDS
+    public void ReceiveDailyRewards(int number){
+        if(number == 1){
+            
+        }
+        else if (number == 2)
+        {
+
+        }
+        else if (number == 3)
+        {
+
+        }
+        else if (number == 4)
+        {
+
+        }
+        else if (number == 5)
+        {
+
+        }
+        MinusNotificationCount();
+        ClearDailyRewards(number);
+    }
+    public void ReceiveQuestRewards(int number)
+    {
+        if (number == 1)
+        {
+
+        }
+        else if (number == 2)
+        {
+
+        }
+        else if (number == 3)
+        {
+
+        }
+        else if (number == 4)
+        {
+
+        }
+        else if (number == 5)
+        {
+
+        }
+        else if (number == 6)
+        {
+
+        }
+        else if (number == 7)
+        {
+
+        }
+        else if (number == 8)
+        {
+
+        }
+        else if (number == 9)
+        {
+
+        }
+        else if (number == 10)
+        {
+
+        }
+        MinusNotificationCount();
+        ClearQuestRewards(number);
+    }
+    public void ReceiveAdRewards(int number){
+        if (number == 1)
+        {
+
+        }
+        else if (number == 2)
+        {
+
+        }
+        else if (number == 3)
+        {
+
+        }
+        MinusNotificationCount();
+        ClearAdRewards(number);
+    }
+    #endregion
+
+
+    #region READY TO GET REWARDS
+    private void SetReadyToGetDailyRewards(int number){
+        if (number == 1)
+        {
+            PlayerPrefs.SetInt(DAILY_1, 1);
+        }
+        else if (number == 2)
+        {
+            PlayerPrefs.SetInt(DAILY_2, 1);
+        }
+        else if (number == 3)
+        {
+            PlayerPrefs.SetInt(DAILY_3, 1);
+        }
+        else if (number == 4)
+        {
+            PlayerPrefs.SetInt(DAILY_4, 1);
+        }
+        else if (number == 5)
+        {
+            PlayerPrefs.SetInt(DAILY_5, 1);
+        }
+    }
+    private void SetReadyToGetQuestRewards(int number){
+        if (number == 1)
+        {
+            PlayerPrefs.SetInt(QUEST_1, 1);
+        }
+        else if (number == 2)
+        {
+            PlayerPrefs.SetInt(QUEST_2, 1);
+        }
+        else if (number == 3)
+        {
+            PlayerPrefs.SetInt(QUEST_3, 1);
+        }
+        else if (number == 4)
+        {
+            PlayerPrefs.SetInt(QUEST_4, 1);
+        }
+        else if (number == 5)
+        {
+            PlayerPrefs.SetInt(QUEST_5, 1);
+        }
+        else if (number == 6)
+        {
+            PlayerPrefs.SetInt(QUEST_6, 1);
+        }
+        else if (number == 7)
+        {
+            PlayerPrefs.SetInt(QUEST_7, 1);
+        }
+        else if (number == 8)
+        {
+            PlayerPrefs.SetInt(QUEST_8, 1);
+        }
+        else if (number == 9)
+        {
+            PlayerPrefs.SetInt(QUEST_9, 1);
+        }
+        else if (number == 10)
+        {
+            PlayerPrefs.SetInt(QUEST_10, 1);
+        }
+    }
+    private void SetReadyToGetAdRewards(int number){
+        if (number == 1)
+        {
+            PlayerPrefs.SetInt(AD_1, 1);
+        }
+        else if (number == 2)
+        {
+            PlayerPrefs.SetInt(AD_2, 1);
+        }
+        else if (number == 3)
+        {
+            PlayerPrefs.SetInt(AD_3, 1);
+        }
+    }
+    #endregion
+
+
+    #region CLEAR REWARDS
+    private void ClearDailyRewards(int number)
+    {
+        if (number == 1)
+        {
+            PlayerPrefs.SetInt(DAILY_1, 0);
+        }
+        else if (number == 2)
+        {
+            PlayerPrefs.SetInt(DAILY_2, 0);
+        }
+        else if (number == 3)
+        {
+            PlayerPrefs.SetInt(DAILY_3, 0);
+        }
+        else if (number == 4)
+        {
+            PlayerPrefs.SetInt(DAILY_4, 0);
+        }
+        else if (number == 5)
+        {
+            PlayerPrefs.SetInt(DAILY_5, 0);
+        }
+    }
+
+    private void ClearQuestRewards(int number)
+    {
+        if (number == 1)
+        {
+            PlayerPrefs.SetInt(QUEST_1, 0);
+        }
+        else if (number == 2)
+        {
+            PlayerPrefs.SetInt(QUEST_2, 0);
+        }
+        else if (number == 3)
+        {
+            PlayerPrefs.SetInt(QUEST_3, 0);
+        }
+        else if (number == 4)
+        {
+            PlayerPrefs.SetInt(QUEST_4, 0);
+        }
+        else if (number == 5)
+        {
+            PlayerPrefs.SetInt(QUEST_5, 0);
+        }
+        else if (number == 6)
+        {
+            PlayerPrefs.SetInt(QUEST_6, 0);
+        }
+        else if (number == 7)
+        {
+            PlayerPrefs.SetInt(QUEST_7, 0);
+        }
+        else if (number == 8)
+        {
+            PlayerPrefs.SetInt(QUEST_8, 0);
+        }
+        else if (number == 9)
+        {
+            PlayerPrefs.SetInt(QUEST_9, 0);
+        }
+        else if (number == 10)
+        {
+            PlayerPrefs.SetInt(QUEST_10, 0);
+        }
+    }
+
+    private void ClearAdRewards(int number)
+    {
+        if (number == 1)
+        {
+            PlayerPrefs.SetInt(AD_1, 0);
+        }
+        else if (number == 2)
+        {
+            PlayerPrefs.SetInt(AD_2, 0);
+        }
+        else if (number == 3)
+        {
+            PlayerPrefs.SetInt(AD_3, 0);
+        }
+    }
+    #endregion
+
 
 
 
